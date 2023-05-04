@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const port = 3000;
+// Test Dummy data
 const dummyData = {
     id: 6969,
     message: 'Data is retrieved',

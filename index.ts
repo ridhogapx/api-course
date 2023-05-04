@@ -9,6 +9,7 @@ interface Dummy {
 	success: boolean,
 }
 
+// Test Dummy data
 const dummyData: Dummy = {
 	id: 6969,
 	message: 'Data is retrieved',
