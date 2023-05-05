@@ -1,53 +1,55 @@
 import express, { Express, Request, Response } from 'express';
- 
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
+import { connection } from './config/DBConfig';
 
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+
+// Body Parser
 const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
 
-
-const connection: any = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: '',
-	database: 'course_api'
-});
-
+// Salt for hashing password
+const salt: number = 10;
 
 const app: Express = express();
+
+// Port number
 const port: number = 3000;
 
-interface APIResponse {
+interface ResponseForChange {
 	message: string,
 	success: boolean
-	data: Data[]
 };
 
-interface Data {
-	email: string,
-	password: string
-}
+connection.connect();
 
 app.post('/api/user', urlEncodedParser , (req: Request, res: Response):void => {	
-	const response: APIResponse = {
+	const response: ResponseForChange = {
 		message: `Success for adding user`,
 		success: true,
-		data: [
-			{
-				email: req.body.email,
-				password: req.body.password
-			}
-		]
 	}
 
-	res.end(JSON.stringify(response));
+	let pass: string = req.body.password;
+
+	bcrypt
+		.hash(pass,salt)
+		.then((hash: any): void => {
+			connection.query(`INSERT INTO sus_users (email, password, name, gender) VALUES ('${req.body.email}', '${hash}' , '${req.body.name}', '${req.body.gender}')`, (err:any, rows: any, fields: any) => {
+				if(err) {
+					throw err;
+					connection.end();
+				} else {
+					res.end(JSON.stringify(response));
+				}
+	});
+		}).catch((err: any): void => {
+			console.log(err);
+		})
+	
 });
 
 app.listen(port, ():void => {
 	console.log(`Server is running on port ${port}`);
 });
 
-connection.connect();
 
-connection.end();
 
