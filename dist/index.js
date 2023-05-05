@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const DBConfig_1 = require("./config/DBConfig");
+const TestRoute_1 = __importDefault(require("./routes/TestRoute"));
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 // Body Parser
@@ -38,6 +39,7 @@ app.post('/api/user', urlEncodedParser, (req, res) => {
         console.log(err);
     });
 });
+(0, TestRoute_1.default)();
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

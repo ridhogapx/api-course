@@ -1,29 +1,25 @@
+import { connection } from '../config/DBConfig';
 import express, { Express, Request, Response } from 'express';
-import { connection } from './config/DBConfig';
-import test from './routes/TestRoute';
 
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 
+// Initialize App
+const app: Express = express();
 // Body Parser
 const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
-
 // Salt for hashing password
 const salt: number = 10;
 
-const app: Express = express();
-
-// Port number
-const port: number = 3000;
+connection.connect();
 
 interface ResponseForChange {
 	message: string,
 	success: boolean
 };
 
-connection.connect();
-
-app.post('/api/user', urlEncodedParser , (req: Request, res: Response):void => {	
+export const RegisterUser = (): void => {
+	app.post('/api/user', urlEncodedParser , (req: Request, res: Response):void => {	
 	const response: ResponseForChange = {
 		message: `Success for adding user`,
 		success: true,
@@ -46,14 +42,6 @@ app.post('/api/user', urlEncodedParser , (req: Request, res: Response):void => {
 			console.log(err);
 		})
 	
-});
+	});
 
-test()
-
-
-app.listen(port, ():void => {
-	console.log(`Server is running on port ${port}`);
-});
-
-
-
+}
