@@ -1,25 +1,23 @@
 import { connection } from '../config/DBConfig';
 import express, { Express, Request, Response } from 'express';
 
-const bodyParser = require('body-parser');
+// For hasing password
 const bcrypt = require('bcrypt');
 
 // Initialize App
 const app: Express = express();
-// Body Parser
-const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
-// Salt for hashing password
-const salt: number = 10;
 
-connection.connect();
+// Salt rounds
+const salt: number = 10;
 
 interface ResponseForChange {
 	message: string,
 	success: boolean
 };
 
-export const RegisterUser = (): void => {
-	app.post('/api/user', urlEncodedParser , (req: Request, res: Response):void => {	
+
+export const RegisterUser = (req: Request, res: Response): void => {
+	connection.connect();
 	const response: ResponseForChange = {
 		message: `Success for adding user`,
 		success: true,
@@ -41,7 +39,4 @@ export const RegisterUser = (): void => {
 		}).catch((err: any): void => {
 			console.log(err);
 		})
-	
-	});
-
 }
