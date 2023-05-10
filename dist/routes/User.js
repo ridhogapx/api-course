@@ -1,39 +1,92 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterUser = void 0;
-const DBConfig_1 = require("../config/DBConfig");
-const express_1 = __importDefault(require("express"));
-// For hasing password
+exports.registerUser = exports.syncUserModel = exports.checkUserModel = void 0;
+const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
+// For hashing password
 const bcrypt = require('bcrypt');
-// Initialize App
-const app = (0, express_1.default)();
+const ormUser = new ORMUser('course_api', 'root', '', {
+    host: 'localhost',
+    dialect: 'mysql'
+});
 // Salt rounds
 const salt = 10;
 ;
-const RegisterUser = (req, res) => {
-    DBConfig_1.connection.connect();
-    const response = {
-        message: `Success for adding user`,
-        success: true,
-    };
-    let pass = req.body.password;
-    bcrypt
-        .hash(pass, salt)
-        .then((hash) => {
-        DBConfig_1.connection.query(`INSERT INTO sus_users (email, password, name, gender) VALUES ('${req.body.email}', '${hash}' , '${req.body.name}', '${req.body.gender}')`, (err, rows, fields) => {
-            if (err) {
-                throw err;
-                DBConfig_1.connection.end();
-            }
-            else {
-                res.end(JSON.stringify(response));
-            }
+const User = ormUser.define('sus_users', {
+    email: {
+        type: TypeUser.STRING(20),
+        allowNull: false,
+    },
+    password: {
+        type: TypeUser.STRING(255),
+        allowNull: false,
+    },
+    name: {
+        type: TypeUser.STRING(50),
+        allowNull: false,
+    },
+    gender: {
+        type: TypeUser.STRING(10),
+        allowNull: false,
+    },
+    role: {
+        type: TypeUser.INTEGER(2),
+        allowNull: false,
+        defaultValue: 0
+    }
+});
+;
+const checkUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield ormUser.authenticate();
+        console.log(`Connection to database is successfull`);
+    }
+    catch (err) {
+        console.log(`Failed to connect database ${err}`);
+    }
+});
+exports.checkUserModel = checkUserModel;
+const syncUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield ormUser.sync();
+        console.log(`Table sus_users is created`);
+    }
+    catch (err) {
+        console.log(`Can't create table sus_users`);
+    }
+});
+exports.syncUserModel = syncUserModel;
+const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const successResponse = {
+            message: 'Pendaftaran berhasil!',
+            success: true,
+            status: 201
+        };
+        const hash = yield bcrypt.hash(req.body.password, salt);
+        yield User.create({
+            email: req.body.email,
+            password: hash,
+            name: req.body.name,
+            gender: req.body.gender,
         });
-    }).catch((err) => {
-        console.log(err);
-    });
-};
-exports.RegisterUser = RegisterUser;
+        res.end(JSON.stringify(successResponse, null, 2));
+    }
+    catch (err) {
+        const failResponse = {
+            message: `${err}`,
+            success: false,
+            status: 403,
+        };
+        res.end(JSON.stringify(failResponse, null, 2));
+    }
+});
+exports.registerUser = registerUser;

@@ -11,7 +11,9 @@ const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 const app = (0, express_1.default)();
 // Port number
 const port = 3000;
-app.post('/api/signup', urlEncodedParser, User_1.RegisterUser);
+(0, User_1.checkUserModel)();
+(0, User_1.syncUserModel)();
+app.post('/api/signup', urlEncodedParser, User_1.registerUser);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

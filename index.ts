@@ -1,6 +1,5 @@
 import express, { Express } from 'express';
-import { connection } from './config/DBConfig';
-import { RegisterUser } from './routes/User';
+import { checkUserModel, syncUserModel, registerUser } from './routes/User';
 
 const bodyParser = require('body-parser');
 
@@ -12,7 +11,12 @@ const app: Express = express();
 // Port number
 const port: number = 3000;
 
-app.post('/api/signup', urlEncodedParser , RegisterUser);
+checkUserModel();
+syncUserModel();
+
+app.post('/api/signup', urlEncodedParser , registerUser);
+
+
 
 app.listen(port, ():void => {
 	console.log(`Server is running on port ${port}`);
