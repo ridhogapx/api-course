@@ -19,7 +19,6 @@ const ormUser = new ORMUser('course_api', 'root', '', {
 });
 // Salt rounds
 const salt = 10;
-;
 const User = ormUser.define('sus_users', {
     email: {
         type: TypeUser.STRING(20),

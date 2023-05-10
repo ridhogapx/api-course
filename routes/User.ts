@@ -14,11 +14,6 @@ const ormUser = new ORMUser(
 // Salt rounds
 const salt: number = 10;
 
-interface ResponseForChange {
-	message: string,
-	success: boolean
-};
-
 const User = ormUser.define('sus_users', {
 	email: {
 		type: TypeUser.STRING(20),
@@ -93,6 +88,4 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 		}
 		res.end(JSON.stringify(failResponse, null, 2));
 	}
-
-
 } 
