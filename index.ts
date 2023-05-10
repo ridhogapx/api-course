@@ -16,8 +16,6 @@ syncUserModel();
 
 app.post('/api/signup', urlEncodedParser , registerUser);
 
-
-
 app.listen(port, ():void => {
 	console.log(`Server is running on port ${port}`);
 });
