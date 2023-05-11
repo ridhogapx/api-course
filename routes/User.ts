@@ -1,4 +1,4 @@
-const {Sequelize: ORMUser, DataTypes: TypeUser} = require('sequelize');
+const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
 // For hashing password
 const bcrypt = require('bcrypt');
 
