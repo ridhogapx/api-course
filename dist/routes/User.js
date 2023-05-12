@@ -95,23 +95,41 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 exports.registerUser = registerUser;
+// Route Login
 const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const emailInput = req.body.email;
+    const passInput = req.body.password;
     // Auth system
     const validator = yield User.findAll({
         where: {
-            email: req.body.email
+            email: emailInput
         }
     });
     if (validator.length) {
-        const result = {
-            message: 'Berhasil',
-            success: true,
-            status: 200,
-            data: [{
-                    password: validator[0].password
-                }]
-        };
-        res.end(JSON.stringify(result, null, 2));
+        try {
+            const validatePass = yield bcrypt.compare(passInput, validator[0].password);
+            if (validatePass) {
+                const successResponse = {
+                    message: 'Selamat anda berhasil login!',
+                    success: true,
+                    status: 200,
+                    data: []
+                };
+                res.end(JSON.stringify(successResponse, null, 2));
+            }
+            else {
+                const wrongPassword = {
+                    message: 'Password salah!',
+                    success: false,
+                    status: 404,
+                    data: [],
+                };
+                res.end(JSON.stringify(wrongPassword, null, 2));
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
     else {
         const unregisteredEmail = {

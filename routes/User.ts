@@ -101,27 +101,45 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 
 }
 
+
+// Route Login
 export const Login = async(req: any, res: any): Promise<void> => {
+	const emailInput: string = req.body.email;
+	const passInput: string = req.body.password;
+
 	// Auth system
 	const validator = await User.findAll({
 		where: {
-			email: req.body.email
+			email: emailInput
 		}
 	});
 
 	if(validator.length) {
+		try {
+			const validatePass = await bcrypt.compare(passInput, validator[0].password);
 
-		const result: ResponseAPI = {
-			message: 'Berhasil',
-			success: true,
-			status: 200,
-			data: [{
-				password: validator[0].password
-			}]
-		};
+			if(validatePass) {
+				const successResponse: ResponseAPI = {
+						message: 'Selamat anda berhasil login!',
+						success: true,
+						status: 200,
+						data: []
+					}
+				res.end(JSON.stringify(successResponse, null, 2));
+			} else {
+				const wrongPassword: ResponseAPI = {
+						message: 'Password salah!',
+						success: false,
+						status: 404,
+						data: [],
+					}
+				res.end(JSON.stringify(wrongPassword, null, 2));
+			}
 
+		} catch (err) {
+			console.log(err);
+		}
 
-		res.end(JSON.stringify(result, null, 2));
 	} else {
 		const unregisteredEmail: ResponseAPI = {
 			message: 'Maaf, Email tidak terdaftar!',
@@ -131,8 +149,6 @@ export const Login = async(req: any, res: any): Promise<void> => {
 		};
 
 		res.end(JSON.stringify(unregisteredEmail, null, 2));
-	}
-	
+	}	
 }
-
 
