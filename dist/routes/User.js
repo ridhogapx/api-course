@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.registerUser = exports.syncUserModel = exports.checkUserModel = void 0;
+exports.registerUser = exports.syncUserModel = exports.checkUserModel = exports.validateEmail = void 0;
 const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
 // For hashing password
 const bcrypt = require('bcrypt');
@@ -43,10 +43,36 @@ const User = ormUser.define('sus_users', {
     }
 });
 ;
+/* Fix this validator */
+const validateEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const validator = yield User.findAll({
+        where: {
+            email: req.body.email
+        }
+    });
+    const successResponse = {
+        message: 'Email telah terdaftar!',
+        success: true,
+        status: 200,
+        data: [validator]
+    };
+    const failResponse = {
+        message: 'Email tidak terdaftar!',
+        success: false,
+        status: 404,
+        data: []
+    };
+    if (validator.length) {
+        res.end(JSON.stringify(successResponse, null, 2));
+    }
+    else {
+        res.end(JSON.stringify(failResponse, null, 2));
+    }
+});
+exports.validateEmail = validateEmail;
 const checkUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield ormUser.authenticate();
-        console.log(`Connection to database is successfull`);
     }
     catch (err) {
         console.log(`Failed to connect database ${err}`);
@@ -56,7 +82,6 @@ exports.checkUserModel = checkUserModel;
 const syncUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield ormUser.sync();
-        console.log(`Table sus_users is created`);
     }
     catch (err) {
         console.log(`Can't create table sus_users`);
@@ -68,7 +93,8 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const successResponse = {
             message: 'Pendaftaran berhasil!',
             success: true,
-            status: 201
+            status: 201,
+            data: []
         };
         const hash = yield bcrypt.hash(req.body.password, salt);
         yield User.create({
@@ -84,6 +110,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             message: `${err}`,
             success: false,
             status: 403,
+            data: []
         };
         res.end(JSON.stringify(failResponse, null, 2));
     }

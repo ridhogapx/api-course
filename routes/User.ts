@@ -1,4 +1,5 @@
 const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
+
 // For hashing password
 const bcrypt = require('bcrypt');
 
@@ -38,16 +39,45 @@ const User = ormUser.define('sus_users', {
 	}
 })
 
-interface ResponseForChange {
+interface ResponseAPI {
 	message: string,
 	success: boolean,
 	status: number,
+	data: any[]
 };
+
+/* Fix this validator */
+export const validateEmail = async(req: any, res: any): Promise<void> => {	
+		const validator = await User.findAll({
+			where: {
+				email: req.body.email
+			}
+		});
+
+		const successResponse: ResponseAPI = {
+			message: 'Email telah terdaftar!',
+			success: true,
+			status: 200,
+			data: [validator]
+		};
+
+		const failResponse: ResponseAPI = {
+			message: 'Email tidak terdaftar!',
+			success: false,
+			status: 404,
+			data: []
+		};
+
+		if(validator.length) {
+			res.end(JSON.stringify(successResponse, null, 2));	
+		} else {
+			res.end(JSON.stringify(failResponse, null, 2));
+		}
+}
 
 export const checkUserModel = async(): Promise<void> => {
 	try {
 		await ormUser.authenticate();
-		console.log(`Connection to database is successfull`);
 	} catch(err) {
 		console.log(`Failed to connect database ${err}`);
 	}
@@ -56,7 +86,6 @@ export const checkUserModel = async(): Promise<void> => {
 export const syncUserModel = async(): Promise<void> => {
 	try {
 		await ormUser.sync();
-		console.log(`Table sus_users is created`);
 	} catch (err) {
 		console.log(`Can't create table sus_users`);
 	}
@@ -65,11 +94,12 @@ export const syncUserModel = async(): Promise<void> => {
 export const registerUser = async(req: any, res: any): Promise<void> => {
 	try {
 
-	const successResponse: ResponseForChange = {
+	const successResponse: ResponseAPI = {
 			message: 'Pendaftaran berhasil!',
 			success: true,
-			status: 201
-			}
+			status: 201,
+			data: []
+		}
 
 	const hash = await bcrypt.hash(req.body.password, salt);
 
@@ -81,11 +111,14 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 	});
 	res.end(JSON.stringify(successResponse, null, 2));
 	} catch(err) {
-		const failResponse: ResponseForChange = {
+		const failResponse: ResponseAPI = {
 			message: `${err}`,
 			success: false,
 			status: 403,
+			data: []
 		}
 		res.end(JSON.stringify(failResponse, null, 2));
 	}
 } 
+
+
