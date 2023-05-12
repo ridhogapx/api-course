@@ -46,35 +46,6 @@ interface ResponseAPI {
 	data: any[]
 };
 
-/* Fix this validator */
-export const validateEmail = async(req: any, res: any): Promise<void> => {	
-		const validator = await User.findAll({
-			where: {
-				email: req.body.email
-			}
-		});
-
-		const successResponse: ResponseAPI = {
-			message: 'Email telah terdaftar!',
-			success: true,
-			status: 200,
-			data: [validator]
-		};
-
-		const failResponse: ResponseAPI = {
-			message: 'Email tidak terdaftar!',
-			success: false,
-			status: 404,
-			data: []
-		};
-
-		if(validator.length) {
-			res.end(JSON.stringify(successResponse, null, 2));	
-		} else {
-			res.end(JSON.stringify(failResponse, null, 2));
-		}
-}
-
 export const checkUserModel = async(): Promise<void> => {
 	try {
 		await ormUser.authenticate();
@@ -128,6 +99,35 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 		res.end(JSON.stringify(failResponse, null, 2));
 	}
 
-} 
+}
+
+export const Login = async(req: any, res: any): Promise<void> => {
+	// Auth system
+	const validator = await User.findAll({
+		where: {
+			email: req.body.email
+		}
+	});
+
+	if(validator.length) {
+		const result: ResponseAPI = {
+			message: 'Berhasil',
+			success: true,
+			status: 200,
+			data: validator
+		}
+		res.end(JSON.stringify(result, null, 2));
+	} else {
+		const unregisteredEmail: ResponseAPI = {
+			message: 'Maaf, Email tidak terdaftar!',
+			success: false,
+			status: 404,
+			data: []
+		};
+
+		res.end(JSON.stringify(unregisteredEmail, null, 2));
+	}
+	
+}
 
 
