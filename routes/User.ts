@@ -110,12 +110,17 @@ export const Login = async(req: any, res: any): Promise<void> => {
 	});
 
 	if(validator.length) {
+
 		const result: ResponseAPI = {
 			message: 'Berhasil',
 			success: true,
 			status: 200,
-			data: validator
-		}
+			data: [{
+				password: validator[0].password
+			}]
+		};
+
+
 		res.end(JSON.stringify(result, null, 2));
 	} else {
 		const unregisteredEmail: ResponseAPI = {

@@ -107,7 +107,9 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             message: 'Berhasil',
             success: true,
             status: 200,
-            data: validator
+            data: [{
+                    password: validator[0].password
+                }]
         };
         res.end(JSON.stringify(result, null, 2));
     }
