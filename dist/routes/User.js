@@ -89,7 +89,13 @@ const syncUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.syncUserModel = syncUserModel;
 const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
+    /* Validate email. Checking if already use in database...  */
+    const validator = yield User.findAll({
+        where: {
+            email: req.body.email
+        }
+    });
+    if (!validator.length) {
         const successResponse = {
             message: 'Pendaftaran berhasil!',
             success: true,
@@ -105,9 +111,9 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         });
         res.end(JSON.stringify(successResponse, null, 2));
     }
-    catch (err) {
+    else {
         const failResponse = {
-            message: `${err}`,
+            message: 'Maaf, email sudah digunakan!',
             success: false,
             status: 403,
             data: []

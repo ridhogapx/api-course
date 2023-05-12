@@ -92,33 +92,42 @@ export const syncUserModel = async(): Promise<void> => {
 }
 
 export const registerUser = async(req: any, res: any): Promise<void> => {
-	try {
 
-	const successResponse: ResponseAPI = {
+	/* Validate email. Checking if already use in database...  */
+	const validator = await User.findAll({
+		where: {
+			email: req.body.email
+		}
+	});
+
+	if(!validator.length) {
+		const successResponse: ResponseAPI = {
 			message: 'Pendaftaran berhasil!',
 			success: true,
 			status: 201,
 			data: []
 		}
 
-	const hash = await bcrypt.hash(req.body.password, salt);
+		const hash = await bcrypt.hash(req.body.password, salt);
 
-	await User.create({
-		email: req.body.email,
-		password: hash,
-		name: req.body.name,
-		gender: req.body.gender,
-	});
-	res.end(JSON.stringify(successResponse, null, 2));
-	} catch(err) {
+		await User.create({
+			email: req.body.email,
+			password: hash,
+			name: req.body.name,
+			gender: req.body.gender,
+		});
+
+		res.end(JSON.stringify(successResponse, null, 2));
+	} else {
 		const failResponse: ResponseAPI = {
-			message: `${err}`,
+			message: 'Maaf, email sudah digunakan!',
 			success: false,
 			status: 403,
 			data: []
 		}
 		res.end(JSON.stringify(failResponse, null, 2));
 	}
+
 } 
 
 
