@@ -11,6 +11,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Login = exports.registerUser = exports.syncUserModel = exports.checkUserModel = void 0;
 const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
+const dotenv = require('dotenv');
+const jwt = require('jsonwebtoken');
 // For hashing password
 const bcrypt = require('bcrypt');
 const ormUser = new ORMUser('course_api', 'root', '', {
@@ -43,6 +45,13 @@ const User = ormUser.define('sus_users', {
     }
 });
 ;
+// Initialize config .env
+dotenv.config();
+/* Rahasia gwehj */
+const SECRET_KEY = process.env.SECRET;
+const generateToken = (email) => {
+    return jwt.sign({ email: email }, SECRET_KEY, { expiresIn: '1 day' });
+};
 const checkUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield ormUser.authenticate();
@@ -82,7 +91,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             name: req.body.name,
             gender: req.body.gender,
         });
-        res.end(JSON.stringify(successResponse, null, 2));
+        res.json(successResponse);
     }
     else {
         const failResponse = {
@@ -91,7 +100,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             status: 403,
             data: []
         };
-        res.end(JSON.stringify(failResponse, null, 2));
+        res.json(failResponse);
     }
 });
 exports.registerUser = registerUser;
@@ -109,13 +118,18 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const validatePass = yield bcrypt.compare(passInput, validator[0].password);
             if (validatePass) {
+                const token = generateToken(emailInput);
                 const successResponse = {
-                    message: 'Selamat anda berhasil login!',
+                    message: 'Berhasil masuk.',
                     success: true,
                     status: 200,
-                    data: []
+                    data: [
+                        {
+                            token: token
+                        }
+                    ]
                 };
-                res.end(JSON.stringify(successResponse, null, 2));
+                res.json(successResponse);
             }
             else {
                 const wrongPassword = {
@@ -124,7 +138,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     status: 404,
                     data: [],
                 };
-                res.end(JSON.stringify(wrongPassword, null, 2));
+                res.json(wrongPassword);
             }
         }
         catch (err) {
@@ -138,7 +152,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             status: 404,
             data: []
         };
-        res.end(JSON.stringify(unregisteredEmail, null, 2));
+        res.json(unregisteredEmail);
     }
 });
 exports.Login = Login;

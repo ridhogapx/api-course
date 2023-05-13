@@ -1,4 +1,6 @@
 const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
+const dotenv: any = require('dotenv');
+const jwt: any = require('jsonwebtoken');
 
 // For hashing password
 const bcrypt = require('bcrypt');
@@ -46,6 +48,16 @@ interface ResponseAPI {
 	data: any[]
 };
 
+// Initialize config .env
+dotenv.config();
+
+/* Rahasia gwehj */
+const SECRET_KEY: any = process.env.SECRET;
+
+const generateToken = (email: string): string => {
+	return jwt.sign({email: email}, SECRET_KEY, {expiresIn: '1 day'})
+}
+
 export const checkUserModel = async(): Promise<void> => {
 	try {
 		await ormUser.authenticate();
@@ -88,7 +100,7 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 			gender: req.body.gender,
 		});
 
-		res.end(JSON.stringify(successResponse, null, 2));
+		res.json(successResponse);
 	} else {
 		const failResponse: ResponseAPI = {
 			message: 'Maaf, email sudah digunakan!',
@@ -96,7 +108,7 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 			status: 403,
 			data: []
 		}
-		res.end(JSON.stringify(failResponse, null, 2));
+		res.json(failResponse);
 	}
 
 }
@@ -119,13 +131,18 @@ export const Login = async(req: any, res: any): Promise<void> => {
 			const validatePass = await bcrypt.compare(passInput, validator[0].password);
 
 			if(validatePass) {
+				const token: string = generateToken(emailInput);
 				const successResponse: ResponseAPI = {
-						message: 'Selamat anda berhasil login!',
+						message: 'Berhasil masuk.',
 						success: true,
 						status: 200,
-						data: []
+						data: [
+							{
+								token: token
+							}
+						]
 					}
-				res.end(JSON.stringify(successResponse, null, 2));
+				res.json(successResponse)
 			} else {
 				const wrongPassword: ResponseAPI = {
 						message: 'Password salah!',
@@ -133,7 +150,7 @@ export const Login = async(req: any, res: any): Promise<void> => {
 						status: 404,
 						data: [],
 					}
-				res.end(JSON.stringify(wrongPassword, null, 2));
+				res.json(wrongPassword);
 			}
 
 		} catch (err) {
@@ -148,7 +165,7 @@ export const Login = async(req: any, res: any): Promise<void> => {
 			data: []
 		};
 
-		res.end(JSON.stringify(unregisteredEmail, null, 2));
+		res.json(unregisteredEmail);
 	}	
 }
 
