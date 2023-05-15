@@ -1,7 +1,7 @@
 const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
 const dotenv: any = require('dotenv');
 const jwt: any = require('jsonwebtoken');
-
+const { validationResult }: any = require('express-validator');
 // For hashing password
 const bcrypt = require('bcrypt');
 
@@ -52,7 +52,7 @@ interface ResponseAPI {
 dotenv.config();
 
 /* Rahasia gwehj */
-const SECRET_KEY: any = process.env.SECRET;
+const SECRET_KEY: any = process.env.SECRET || 'AMOGUSECRETSUSSYBAKA@6969#23';
 
 const generateToken = (email: string): string => {
 	return jwt.sign({email: email}, SECRET_KEY, {expiresIn: '1 day'})
@@ -74,7 +74,16 @@ export const syncUserModel = async(): Promise<void> => {
 	}
 }
 
-export const registerUser = async(req: any, res: any): Promise<void> => {
+export const Register = async(req: any, res: any): Promise<any> => {
+	// Validator input
+	const result:any  = validationResult(req);
+
+	if(!result.isEmpty()) {
+		return res.json({
+			errors: result.array()
+		})
+	}
+
 
 	/* Validate email. Checking if already use in database...  */
 	const validator = await User.findAll({
@@ -100,24 +109,33 @@ export const registerUser = async(req: any, res: any): Promise<void> => {
 			gender: req.body.gender,
 		});
 
-		res.json(successResponse);
+		return res.json(successResponse);
 	} else {
 		const failResponse: ResponseAPI = {
-			message: 'Maaf, email sudah digunakan!',
+			message: 'Maaf, akun anda sudah terdaftar!',
 			success: false,
 			status: 403,
 			data: []
 		}
-		res.json(failResponse);
+		return res.json(failResponse);
 	}
 
 }
 
 
 // Route Login
-export const Login = async(req: any, res: any): Promise<void> => {
+export const Login = async(req: any, res: any): Promise<any> => {
 	const emailInput: string = req.body.email;
 	const passInput: string = req.body.password;
+	const result: any = validationResult(req);
+
+	// Validating input 
+	if(!result.isEmpty()) {
+		return res.json({
+			errors: result.array()
+		});
+
+	}
 
 	// Auth system
 	const validator = await User.findAll({
@@ -142,7 +160,7 @@ export const Login = async(req: any, res: any): Promise<void> => {
 							}
 						]
 					}
-				res.json(successResponse)
+				return res.json(successResponse)
 			} else {
 				const wrongPassword: ResponseAPI = {
 						message: 'Password salah!',
@@ -150,7 +168,7 @@ export const Login = async(req: any, res: any): Promise<void> => {
 						status: 404,
 						data: [],
 					}
-				res.json(wrongPassword);
+				return res.json(wrongPassword);
 			}
 
 		} catch (err) {
@@ -165,7 +183,16 @@ export const Login = async(req: any, res: any): Promise<void> => {
 			data: []
 		};
 
-		res.json(unregisteredEmail);
+		return res.json(unregisteredEmail);
 	}	
 }
+
+/* 
+Todo: 
+1. Dynamic error response 
+2. Validator
+3. Cors?
+4. Adding new feature: User study progress
+5. Course playlist
+ */
 

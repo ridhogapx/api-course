@@ -1,10 +1,22 @@
+// Express 
 import express, { Express } from 'express';
-import { checkUserModel, syncUserModel, registerUser, Login } from './routes/User';
+// Validator middleware
+import validateLogin from './middlewares/ValidateLogin';
+import validateRegister from './middlewares/ValidateRegister';
 
-const bodyParser = require('body-parser');
+// User controller
+import { checkUserModel, syncUserModel, Register, Login } from './routes/User';
 
-// Body Parser
+
+// Module for parsing payload
+const bodyParser: any = require('body-parser');
+// Validation result
+const { validationResult }: any = require('express-validator');
+
+// HTTP Payload Parser
 const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
+
+// Initialize Express
 const app: Express = express();
 
 // Port number
@@ -14,9 +26,12 @@ const port: number = 3000;
 checkUserModel();
 syncUserModel();
 
+// Using payload parser in Express
+app.use(urlEncodedParser);
+
 // API Route
-app.post('/api/register', urlEncodedParser , registerUser);
-app.post('/api/login', urlEncodedParser, Login);
+app.post('/api/register' , validateRegister ,Register);
+app.post('/api/login', validateLogin ,Login);
 
 app.listen(port, ():void => {
 	console.log(`Server is running on port ${port}`);

@@ -9,10 +9,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Login = exports.registerUser = exports.syncUserModel = exports.checkUserModel = void 0;
+exports.Login = exports.Register = exports.syncUserModel = exports.checkUserModel = void 0;
 const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 // For hashing password
 const bcrypt = require('bcrypt');
 const ormUser = new ORMUser('course_api', 'root', '', {
@@ -48,7 +49,7 @@ const User = ormUser.define('sus_users', {
 // Initialize config .env
 dotenv.config();
 /* Rahasia gwehj */
-const SECRET_KEY = process.env.SECRET;
+const SECRET_KEY = process.env.SECRET || 'AMOGUSECRETSUSSYBAKA@6969#23';
 const generateToken = (email) => {
     return jwt.sign({ email: email }, SECRET_KEY, { expiresIn: '1 day' });
 };
@@ -70,7 +71,14 @@ const syncUserModel = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.syncUserModel = syncUserModel;
-const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const Register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // Validator input
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+        return res.json({
+            errors: result.array()
+        });
+    }
     /* Validate email. Checking if already use in database...  */
     const validator = yield User.findAll({
         where: {
@@ -91,7 +99,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             name: req.body.name,
             gender: req.body.gender,
         });
-        res.json(successResponse);
+        return res.json(successResponse);
     }
     else {
         const failResponse = {
@@ -100,14 +108,21 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             status: 403,
             data: []
         };
-        res.json(failResponse);
+        return res.json(failResponse);
     }
 });
-exports.registerUser = registerUser;
+exports.Register = Register;
 // Route Login
 const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const emailInput = req.body.email;
     const passInput = req.body.password;
+    const result = validationResult(req);
+    // Validating input 
+    if (!result.isEmpty()) {
+        return res.json({
+            errors: result.array()
+        });
+    }
     // Auth system
     const validator = yield User.findAll({
         where: {
@@ -129,7 +144,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         }
                     ]
                 };
-                res.json(successResponse);
+                return res.json(successResponse);
             }
             else {
                 const wrongPassword = {
@@ -138,7 +153,7 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                     status: 404,
                     data: [],
                 };
-                res.json(wrongPassword);
+                return res.json(wrongPassword);
             }
         }
         catch (err) {
@@ -152,7 +167,15 @@ const Login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             status: 404,
             data: []
         };
-        res.json(unregisteredEmail);
+        return res.json(unregisteredEmail);
     }
 });
 exports.Login = Login;
+/*
+Todo:
+1. Dynamic error response
+2. Validator
+3. Cors?
+4. Adding new feature: User study progress
+5. Course playlist
+ */
