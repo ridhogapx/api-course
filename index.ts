@@ -4,8 +4,8 @@ import express, { Express } from 'express';
 import validateLogin from './middlewares/ValidateLogin';
 import validateRegister from './middlewares/ValidateRegister';
 
-// User controller
-import { checkUserModel, syncUserModel, Register, Login } from './routes/User';
+// User Model
+import { checkUserModel, syncUserModel} from './models/User/ConfigUserModel';
 
 
 // Module for parsing payload
