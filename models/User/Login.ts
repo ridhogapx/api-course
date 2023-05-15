@@ -1,4 +1,10 @@
 import { User } from './ConfigUserModel';
+import generateToken from '../../middlewares/TokenGenerator/TokenGenerator';
+import ResponseAPI from '../../interfaces/ResponseAPI';
+
+const { validationResult }: any = require('express-validator');
+
+const bcrypt: any = require('bcrypt');
 
 // Route Login
 const Login = async(req: any, res: any): Promise<any> => {

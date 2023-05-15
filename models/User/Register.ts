@@ -1,7 +1,13 @@
 import { User } from './ConfigUserModel';
-
+import ResponseAPI from '../../interfaces/ResponseAPI';
 const { validationResult }: any = require('express-validator');
 
+
+// For hashing password
+const bcrypt: any = require('bcrypt');
+
+// Salt rounds
+const salt: number = 10;
 // Route Register
 const Register = async(req: any, res: any): Promise<any> => {
 	// Validator input
