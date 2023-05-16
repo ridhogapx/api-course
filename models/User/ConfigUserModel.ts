@@ -22,10 +22,6 @@ export const User: any = ormUser.define('sus_users', {
 		type: TypeUser.STRING(50),
 		allowNull: false,
 	},
-	gender: {
-		type: TypeUser.STRING(10),
-		allowNull: false,
-	},
 	role: {
 		type: TypeUser.INTEGER(2),
 		allowNull: false,

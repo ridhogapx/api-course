@@ -41,7 +41,6 @@ const Register = async(req: any, res: any): Promise<any> => {
 			email: req.body.email,
 			password: hash,
 			name: req.body.name,
-			gender: req.body.gender,
 		});
 
 		return res.json(successResponse);
