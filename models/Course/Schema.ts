@@ -13,3 +13,12 @@ export const Course: any = Orm.define('sus_course', {
 	}
 });
 
+export const checkCourseModel = async(): Promise<void> => {
+	try {
+		await Orm.authenticate();
+	} catch(err) {
+		console.log('Failed to connect to database')
+	}
+};
+
+
