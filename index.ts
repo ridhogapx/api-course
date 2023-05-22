@@ -10,6 +10,9 @@ import { checkUserModel, syncUserModel} from './models/User/Schema';
 import Login from './models/User/Login';
 import Register from './models/User/Register';
 
+// Course Model
+import { checkCourseModel } from './models/Course/Schema';
+
 // Auth Token
 import Auth from './routes/Auth';
 
@@ -21,7 +24,7 @@ const bodyParser: any = require('body-parser');
 const multer: any = require('multer');
 
 // Validation result
-const { validationResult }: any = require('express-validator');
+const { validationResult, syncCourseModel }: any = require('express-validator');
 
 // HTTP Payload Parser
 const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
@@ -36,6 +39,8 @@ const port: number = 3000;
 // Defining Model Database
 checkUserModel();
 syncUserModel();
+checkCourseModel();
+syncCourseModel();
 
 // Using payload parser in Express
 app.use(urlEncodedParser);

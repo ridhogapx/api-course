@@ -9,9 +9,11 @@ const express_1 = __importDefault(require("express"));
 const ValidateLogin_1 = __importDefault(require("./middlewares/ValidateInput/ValidateLogin"));
 const ValidateRegister_1 = __importDefault(require("./middlewares/ValidateInput/ValidateRegister"));
 // User Model
-const ConfigUserModel_1 = require("./models/User/ConfigUserModel");
+const Schema_1 = require("./models/User/Schema");
 const Login_1 = __importDefault(require("./models/User/Login"));
 const Register_1 = __importDefault(require("./models/User/Register"));
+// Course Model
+const Schema_2 = require("./models/Course/Schema");
 // Auth Token
 const Auth_1 = __importDefault(require("./routes/Auth"));
 // Cors for using resource in cross domain
@@ -20,7 +22,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 // Validation result
-const { validationResult } = require('express-validator');
+const { validationResult, syncCourseModel } = require('express-validator');
 // HTTP Payload Parser
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 const jsonPayload = bodyParser.json();
@@ -29,8 +31,10 @@ const app = (0, express_1.default)();
 // Port number
 const port = 3000;
 // Defining Model Database
-(0, ConfigUserModel_1.checkUserModel)();
-(0, ConfigUserModel_1.syncUserModel)();
+(0, Schema_1.checkUserModel)();
+(0, Schema_1.syncUserModel)();
+(0, Schema_2.checkCourseModel)();
+syncCourseModel();
 // Using payload parser in Express
 app.use(urlEncodedParser);
 app.use(jsonPayload);
