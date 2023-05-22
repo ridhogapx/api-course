@@ -1,22 +1,22 @@
 import Orm from '../ConfigDB';
 
-const { DataTypes: TypeUser } = require('sequelize');
+const { DataTypes }: any = require('sequelize');
 
 export const User: any = Orm.define('sus_users', {
 	email: {
-		type: TypeUser.STRING(20),
+		type: DataTypes.STRING(20),
 		allowNull: false,
 	},
 	password: {
-		type: TypeUser.STRING(255),
+		type: DataTypes.STRING(255),
 		allowNull: false,
 	},
 	name: {
-		type: TypeUser.STRING(50),
+		type: DataTypes.STRING(50),
 		allowNull: false,
 	},
 	role: {
-		type: TypeUser.INTEGER(2),
+		type: DataTypes.INTEGER(2),
 		allowNull: false,
 		defaultValue: 0
 	}
