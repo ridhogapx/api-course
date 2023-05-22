@@ -21,4 +21,11 @@ export const checkCourseModel = async(): Promise<void> => {
 	}
 };
 
+export const syncCourseModel = async(): Promise<void> => {
+	try {
+		await Orm.sync();
+	} catch(err ){
+		console.log(err);
+	}
+};
 
