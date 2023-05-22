@@ -1,15 +1,8 @@
-const { Sequelize: ORMUser, DataTypes: TypeUser } = require('sequelize');
+import Orm from '../ConfigDB';
 
-const ormUser = new ORMUser(
-	'course_api',
-	'root',
-	'',
-	{
-		host: 'localhost',
-		dialect: 'mysql'
-	});
+const { DataTypes: TypeUser } = require('sequelize');
 
-export const User: any = ormUser.define('sus_users', {
+export const User: any = Orm.define('sus_users', {
 	email: {
 		type: TypeUser.STRING(20),
 		allowNull: false,
@@ -31,7 +24,7 @@ export const User: any = ormUser.define('sus_users', {
 
 export const checkUserModel = async(): Promise<void> => {
 	try {
-		await ormUser.authenticate();
+		await Orm.authenticate();
 	} catch(err) {
 		console.log(`Failed to connect database ${err}`);
 	}
@@ -39,7 +32,7 @@ export const checkUserModel = async(): Promise<void> => {
 
 export const syncUserModel = async(): Promise<void> => {
 	try {
-		await ormUser.sync();
+		await Orm.sync();
 	} catch (err) {
 		console.log(`Can't create table sus_users`);
 	}

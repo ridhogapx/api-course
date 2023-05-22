@@ -1,5 +1,6 @@
-import { User } from './ConfigUserModel';
+import { User } from './Schema';
 import ResponseAPI from '../../interfaces/ResponseAPI';
+import generateToken from '../../middlewares/Token/TokenGenerator';
 const { validationResult }: any = require('express-validator');
 
 
@@ -10,6 +11,8 @@ const bcrypt: any = require('bcrypt');
 const salt: number = 10;
 // Route Register
 const Register = async(req: any, res: any): Promise<any> => {
+	const email: string = req.body.email;
+
 	// Validator input
 	const result:any  = validationResult(req);
 
@@ -23,22 +26,28 @@ const Register = async(req: any, res: any): Promise<any> => {
 	/* Validate email. Checking if already use in database...  */
 	const validator = await User.findAll({
 		where: {
-			email: req.body.email
+			email: email
 		}
 	});
 
 	if(!validator.length) {
+		const token: string = generateToken(email);
+
 		const successResponse: ResponseAPI = {
 			message: 'Pendaftaran berhasil!',
 			success: true,
 			status: 201,
-			data: []
+			data: [
+				{
+					token: token
+				}
+			]
 		}
 
 		const hash = await bcrypt.hash(req.body.password, salt);
 
 		await User.create({
-			email: req.body.email,
+			email: email,
 			password: hash,
 			name: req.body.name,
 		});

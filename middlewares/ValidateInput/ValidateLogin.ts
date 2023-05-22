@@ -3,9 +3,9 @@ const { body }: any = require('express-validator');
 
 // Validating email
 const validateLogin: any[] = [
-								body('email').trim().notEmpty().withMessage('Tidak boleh kosong!')
+								body('email').trim().notEmpty().withMessage('Email tidak boleh kosong!')
 								.isEmail().withMessage('Email tidak valid!'),
-								body('password').trim().notEmpty().withMessage('Tidak boleh kosong!')
+								body('password').trim().notEmpty().withMessage('Password tidak boleh kosong!')
 								]
 
 export default validateLogin;

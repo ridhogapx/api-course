@@ -1,5 +1,5 @@
-import { User } from './ConfigUserModel';
-import generateToken from '../../middlewares/TokenGenerator/TokenGenerator';
+import { User } from './Schema';
+import generateToken from '../../middlewares/Token/TokenGenerator';
 import ResponseAPI from '../../interfaces/ResponseAPI';
 
 const { validationResult }: any = require('express-validator');
