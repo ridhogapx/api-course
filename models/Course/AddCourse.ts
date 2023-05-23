@@ -27,3 +27,5 @@ const AddCourse = async(req: any, res:any): Promise <any> => {
 	res.json(successResponse);
 
 }
+
+export default AddCourse;
