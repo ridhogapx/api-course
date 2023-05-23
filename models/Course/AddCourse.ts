@@ -10,8 +10,11 @@ const AddCourse = async(req: any, res:any): Promise <any> => {
 		message: 'Berhasil menambahkan materi!',
 		success: true,
 		status: 201,
-		data: []
+		data: [{
+			url: decodeURI(req.body.yt_url)
+		}]
 	}
+
 
 	if(!result.isEmpty()) {
 		return res.json({
@@ -19,10 +22,13 @@ const AddCourse = async(req: any, res:any): Promise <any> => {
 		});
 	}
 
-	await Course.create({
-		title: req.body.title,
-		yt_url: req.body.yt_url
-	})
+	// Disable dulu gak sih 
+	
+	// await Course.create({
+	// 	title: req.body.title,
+	// 	yt_url: req.body.yt_url
+	// })
+	res.set({'content-type': 'application/json; charset=utf-8'})
 
 	res.json(successResponse);
 
