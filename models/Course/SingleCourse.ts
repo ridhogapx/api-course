@@ -30,3 +30,4 @@ const getSingleCourse = async(req: any, res: any): Promise<any> => {
 		res.json(failResponse);
 	}
 }
+export default getSingleCourse;

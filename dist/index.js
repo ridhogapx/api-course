@@ -17,6 +17,7 @@ const Register_1 = __importDefault(require("./models/User/Register"));
 const Schema_2 = require("./models/Course/Schema");
 const AddCourse_1 = __importDefault(require("./models/Course/AddCourse"));
 const AllCourse_1 = __importDefault(require("./models/Course/AllCourse"));
+const SingleCourse_1 = __importDefault(require("./models/Course/SingleCourse"));
 // Auth Token
 const Auth_1 = __importDefault(require("./routes/Auth"));
 // Cors for using resource in cross domain
@@ -50,6 +51,7 @@ app.get('/api/auth/:token', Auth_1.default);
 // API Route for Course
 app.post('/api/course', ValidateCourse_1.default, AddCourse_1.default);
 app.get('/api/course', AllCourse_1.default);
+app.get('/api/course/:id', SingleCourse_1.default);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
