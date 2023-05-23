@@ -1,20 +1,28 @@
 import { Course } from './Schema';
 import ResponseAPI from '../../interfaces/ResponseAPI';
 
-const getAllCourse = async(req: any, res:any): Promise<any> => {
+const getSingleCourse = async(req: any, res: any): Promise<any> => {
+	const id = req.params.id
+
 	try {
-		const allCourse = await Course.findAll();
+		const singleCourse = await Course.findAll({
+			where: {
+				id: id
+			}
+		})
+
 		const successResponse: ResponseAPI = {
-			message: 'Berhasil mendapatkan data materi!',
+			message: 'Berhasil mendapatkan data',
 			success: true,
 			status: 200,
-			data: allCourse
+			data: singleCourse
 		}
 
 		res.json(successResponse);
+
 	} catch(err) {
 		const failResponse: ResponseAPI = {
-			message: 'Data tidak ditemukan!',
+			message: `Data dengan id: ${id} tidak ditemukan!`,
 			success: false,
 			status: 404,
 			data: []
@@ -22,5 +30,3 @@ const getAllCourse = async(req: any, res:any): Promise<any> => {
 		res.json(failResponse);
 	}
 }
-
-export default getAllCourse;
