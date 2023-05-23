@@ -4,6 +4,7 @@ import express, { Express } from 'express';
 // Validator middleware
 import validateLogin from './middlewares/ValidateInput/ValidateLogin';
 import validateRegister from './middlewares/ValidateInput/ValidateRegister';
+import validateCourse from './middlewares/ValidateInput/ValidateCourse';
 
 // User Model
 import { checkUserModel, syncUserModel} from './models/User/Schema';
@@ -12,7 +13,7 @@ import Register from './models/User/Register';
 
 // Course Model
 import { checkCourseModel, syncCourseModel } from './models/Course/Schema';
-
+import AddCourse from './models/Course/AddCourse';
 // Auth Token
 import Auth from './routes/Auth';
 
@@ -49,10 +50,13 @@ app.use(jsonPayload);
 // Using Cors middleware
 app.use(cors());
 
-// API Route
+// API Route for User
 app.post('/api/register' , validateRegister, Register);
 app.post('/api/login', validateLogin, Login);
 app.get('/api/auth/:token', Auth)
+
+// API Route for Course
+app.post('/api/course', validateCourse, AddCourse)
 
 app.listen(port, ():void => {
 	console.log(`Server is running on port ${port}`);

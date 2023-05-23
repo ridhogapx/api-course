@@ -8,12 +8,14 @@ const express_1 = __importDefault(require("express"));
 // Validator middleware
 const ValidateLogin_1 = __importDefault(require("./middlewares/ValidateInput/ValidateLogin"));
 const ValidateRegister_1 = __importDefault(require("./middlewares/ValidateInput/ValidateRegister"));
+const ValidateCourse_1 = __importDefault(require("./middlewares/ValidateInput/ValidateCourse"));
 // User Model
 const Schema_1 = require("./models/User/Schema");
 const Login_1 = __importDefault(require("./models/User/Login"));
 const Register_1 = __importDefault(require("./models/User/Register"));
 // Course Model
 const Schema_2 = require("./models/Course/Schema");
+const AddCourse_1 = __importDefault(require("./models/Course/AddCourse"));
 // Auth Token
 const Auth_1 = __importDefault(require("./routes/Auth"));
 // Cors for using resource in cross domain
@@ -40,10 +42,12 @@ app.use(urlEncodedParser);
 app.use(jsonPayload);
 // Using Cors middleware
 app.use(cors());
-// API Route
+// API Route for User
 app.post('/api/register', ValidateRegister_1.default, Register_1.default);
 app.post('/api/login', ValidateLogin_1.default, Login_1.default);
 app.get('/api/auth/:token', Auth_1.default);
+// API Route for Course
+app.post('/api/course', ValidateCourse_1.default, AddCourse_1.default);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
