@@ -29,7 +29,7 @@ const AddCourse = async(req: any, res:any): Promise <any> => {
 		yt_url: valid_url
 	})
 
-	res.json(successResponse);
+	return res.json(successResponse);
 
 }
 

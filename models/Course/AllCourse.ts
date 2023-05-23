@@ -11,7 +11,7 @@ const getAllCourse = async(req: any, res:any): Promise<any> => {
 			data: allCourse
 		}
 
-		res.json(successResponse);
+		return res.json(successResponse);
 	} catch(err) {
 		const failResponse: ResponseAPI = {
 			message: 'Data tidak ditemukan!',
@@ -19,7 +19,7 @@ const getAllCourse = async(req: any, res:any): Promise<any> => {
 			status: 404,
 			data: []
 		}
-		res.json(failResponse);
+		return res.json(failResponse);
 	}
 }
 
