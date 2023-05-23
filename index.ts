@@ -11,7 +11,7 @@ import Login from './models/User/Login';
 import Register from './models/User/Register';
 
 // Course Model
-import { checkCourseModel } from './models/Course/Schema';
+import { checkCourseModel, syncCourseModel } from './models/Course/Schema';
 
 // Auth Token
 import Auth from './routes/Auth';
@@ -24,7 +24,7 @@ const bodyParser: any = require('body-parser');
 const multer: any = require('multer');
 
 // Validation result
-const { validationResult, syncCourseModel }: any = require('express-validator');
+const { validationResult }: any = require('express-validator');
 
 // HTTP Payload Parser
 const urlEncodedParser:any = bodyParser.urlencoded({extended: false});

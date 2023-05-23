@@ -22,7 +22,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 // Validation result
-const { validationResult, syncCourseModel } = require('express-validator');
+const { validationResult } = require('express-validator');
 // HTTP Payload Parser
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 const jsonPayload = bodyParser.json();
@@ -34,7 +34,7 @@ const port = 3000;
 (0, Schema_1.checkUserModel)();
 (0, Schema_1.syncUserModel)();
 (0, Schema_2.checkCourseModel)();
-syncCourseModel();
+(0, Schema_2.syncCourseModel)();
 // Using payload parser in Express
 app.use(urlEncodedParser);
 app.use(jsonPayload);
