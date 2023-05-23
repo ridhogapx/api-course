@@ -14,6 +14,7 @@ import Register from './models/User/Register';
 // Course Model
 import { checkCourseModel, syncCourseModel } from './models/Course/Schema';
 import AddCourse from './models/Course/AddCourse';
+import getAllCourse from './models/Course/AllCourse';
 // Auth Token
 import Auth from './routes/Auth';
 
@@ -53,10 +54,11 @@ app.use(cors());
 // API Route for User
 app.post('/api/register' , validateRegister, Register);
 app.post('/api/login', validateLogin, Login);
-app.get('/api/auth/:token', Auth)
+app.get('/api/auth/:token', Auth);
 
 // API Route for Course
-app.post('/api/course', validateCourse, AddCourse)
+app.post('/api/course', validateCourse, AddCourse);
+app.get('/api/course', getAllCourse);
 
 app.listen(port, ():void => {
 	console.log(`Server is running on port ${port}`);
