@@ -14,7 +14,7 @@ const deleteCourse = async(req: any, res: any): Promise<any> => {
 			data: []
 		}
 
-		return res.json(validate);
+		return res.json(notFound);
 	}
 
 	await Course.destroy({
