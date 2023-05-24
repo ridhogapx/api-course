@@ -2,6 +2,8 @@
 Sebuah API untuk keperluan E-Course yang menggunakan arsitektur REST. 
 
 # Auth dan User
+
+## Register
 Berikut endpoint untuk mendaftar User.
 ``` http
 	post /api/register
