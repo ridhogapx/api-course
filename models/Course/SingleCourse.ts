@@ -5,8 +5,6 @@ const getSingleCourse = async(req: any, res: any): Promise<any> => {
 	const id = req.params.id
 
 	try {
-
-
 		const singleCourse = await Course.findAll({
 			where: {
 				id: id
