@@ -16,15 +16,15 @@ Dengan ketentuan payload body:
 
 
 Jika berhasil register, maka kamu akan mendapatkan token JWT yang bisa kamu gunakan pada client-side atau lebih tepatnya dengan Cookie HTTP-Only. Token ini nantinya akan digunakan untuk transaksi data dengan teknik Decode Token. Berikut response yang didapat apabila berhasil mendaftar:
-``` http
+``` bash
 {
 	message: 'Pendaftaran berhasil!',
-			success: true,
-			status: 201,
-			data: [
-				{
-					token: token
-				}
-			]
+	success: true,
+	status: 201,
+	data: [
+			{
+				token: token
+			}
+		]
 }
 ```
