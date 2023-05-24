@@ -2,8 +2,12 @@
 Sebuah API untuk keperluan E-Course yang menggunakan arsitektur REST. 
 
 # Stack
-<a href='https://www.typescriptlang.org/'><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYsxxlP9vnPockAeIRH_AbcNovXTSOIgcO9m6vfdGebA&s' width="50"></a>
-<a href='https://www.mysql.com'><img src='https://www.vectorlogo.zone/logos/mysql/mysql-ar21.png' width="50"></a>
+<a href='https://www.typescriptlang.org/'><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYsxxlP9vnPockAeIRH_AbcNovXTSOIgcO9m6vfdGebA&s' width="100"></a>
+<a href='https://nodejs.org'><img src='https://cdn.freebiesupply.com/logos/thumbs/2x/nodejs-1-logo.png' width="100"></a>
+<a href='https://www.mysql.com'><img src='https://www.vectorlogo.zone/logos/mysql/mysql-ar21.png' width="100"></a>
+<a href='https://expressjs.com'><img src='https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png' width="100"></a>
+<a href='https://sequelize.org'><img src='https://google.github.io/sqlcommenter/images/sequelize-logo.png' width="100"></a>
+<a href='https://nodemon.io/'><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMds6bPjl6K_7GczdFMVR6HCB-fJP0otyLaLjsXKQHHQ&s' width="100"></a>
 
 # Auth dan User
 Pada bagian ini berisi Authentikasi seperti generate token JWT, validasi token, dll. Selain itu, bagian ini juga berisi endpoint untuk mendaftar dan login user. 
