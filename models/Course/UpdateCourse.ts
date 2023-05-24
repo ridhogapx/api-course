@@ -1,5 +1,6 @@
 import { Course } from './Schema';
 import ResponseAPI from '../../interfaces/ResponseAPI';
+import checkID from '../../middlewares/ValidateDB/ValidateID';
 
 const { validationResult } = require('express-validator');
 
@@ -11,7 +12,20 @@ const updateCourse = async(req: any, res:any): Promise <any> => {
 		return res.json({
 			errors: result.array()
 		});
-	} 
+	}
+
+	const validateID: boolean = await checkID(id);
+
+	if(!validateID) {
+		const notFoundID: ResponseAPI = {
+			message: `Course dengan id ${id} tidak ditemukan`,
+			success: false,
+			status: 404,
+			data: []
+		};
+
+		return res.json(notFoundID);
+	}
 
 	const YT_URL: any = req.body.yt_url;
 	const valid_url: any = YT_URL.replaceAll('&#x2F;', '/');

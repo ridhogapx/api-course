@@ -8,7 +8,7 @@ const checkID = async(id: number): Promise<boolean> => {
 	});
 
 // Checking if Course is exist then return true. If not then return false
-	if(!Checker.length) {
+	if(Checker.length) {
 		return true;
 	} else {
 		return false;
