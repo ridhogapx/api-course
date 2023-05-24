@@ -2,7 +2,8 @@
 Sebuah API untuk keperluan E-Course yang menggunakan arsitektur REST. 
 
 # Stack
-<a href=''><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYsxxlP9vnPockAeIRH_AbcNovXTSOIgcO9m6vfdGebA&s' width="30"></a>
+<a href='https://www.typescriptlang.org/'><img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYsxxlP9vnPockAeIRH_AbcNovXTSOIgcO9m6vfdGebA&s' width="50"></a>
+<a href='https://www.mysql.com'><img src='https://www.vectorlogo.zone/logos/mysql/mysql-ar21.png' width="50"></a>
 
 # Auth dan User
 Pada bagian ini berisi Authentikasi seperti generate token JWT, validasi token, dll. Selain itu, bagian ini juga berisi endpoint untuk mendaftar dan login user. 
