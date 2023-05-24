@@ -2,6 +2,7 @@
 Sebuah API untuk keperluan E-Course yang menggunakan arsitektur REST. 
 
 # Auth dan User
+Pada bagian ini berisi Authentikasi seperti generate token JWT, validasi token, dll. Selain itu, bagian ini juga berisi endpoint untuk mendaftar dan login user. 
 
 ## Register
 Berikut endpoint untuk mendaftar User.
