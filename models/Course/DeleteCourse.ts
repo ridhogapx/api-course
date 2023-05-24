@@ -32,3 +32,5 @@ const deleteCourse = async(req: any, res: any): Promise<any> => {
 
 	return res.json(successResponse);
 }
+
+export default deleteCourse;
