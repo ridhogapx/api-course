@@ -31,3 +31,12 @@ Jika berhasil register, maka kamu akan mendapatkan token JWT yang bisa kamu guna
 		]
 }
 ```
+Jika email sudah terdaftar, maka akan mendapatkan response di bawah ini: 
+``` bash
+{
+	message: 'Maaf, akun anda sudah terdaftar!',
+	success: false,
+	status: 403,
+	data: []
+}
+```
