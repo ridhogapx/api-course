@@ -13,3 +13,18 @@ Dengan ketentuan payload body:
 | `name`			| `text: string`		|	Nama user 						|
 | `password`		| `text: string / hash`	|	Password 						|
 | `confirmPw`		| `text: string`		|	Konfirmasi password harus sama  |
+
+
+Jika berhasil register, maka kamu akan mendapatkan token JWT yang bisa kamu gunakan pada client-side atau lebih tepatnya dengan Cookie HTTP-Only. Token ini nantinya akan digunakan untuk transaksi data dengan teknik Decode Token. Berikut response yang didapat apabila berhasil mendaftar:
+``` http
+{
+	message: 'Pendaftaran berhasil!',
+			success: true,
+			status: 201,
+			data: [
+				{
+					token: token
+				}
+			]
+}
+```
