@@ -45,3 +45,5 @@ const updateCourse = async(req: any, res:any): Promise <any> => {
 		return res.json(failResponse);
 	}
 }
+
+export default updateCourse;
