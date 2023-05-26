@@ -27,22 +27,25 @@ const Login = async(req: any, res: any): Promise<any> => {
 		}
 	});
 
+	const role: number = validator[0].role;
+
 	if(validator.length) {
 		try {
 			const validatePass = await bcrypt.compare(passInput, validator[0].password);
 
 			if(validatePass) {
-				const token: string = generateToken(emailInput);
+				const token: string = generateToken(emailInput, role);
 				const successResponse: ResponseAPI = {
 						message: 'Berhasil masuk.',
 						success: true,
 						status: 200,
 						data: [
 							{
-								token: token
+								token: token,
 							}
 						]
 					}
+
 				return res.json(successResponse)
 			} else {
 				const wrongPassword: ResponseAPI = {
