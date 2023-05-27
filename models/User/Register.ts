@@ -30,20 +30,12 @@ const Register = async(req: any, res: any): Promise<any> => {
 		}
 	});
 
-	const role: number = validator[0].role;
-
 	if(!validator.length) {
-		const token: string = generateToken(email,role);
-
 		const successResponse: ResponseAPI = {
 			message: 'Pendaftaran berhasil!',
 			success: true,
 			status: 201,
-			data: [
-				{
-					token: token
-				}
-			]
+			data: []
 		}
 
 		const hash = await bcrypt.hash(req.body.password, salt);
