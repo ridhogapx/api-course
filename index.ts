@@ -60,6 +60,9 @@ app.post('/api/register' , validateRegister, Register);
 app.post('/api/login', validateLogin, Login);
 app.get('/api/auth/:token', Auth);
 
+// API For starter data 
+app.get('/api/course/setup');
+
 // API Route for Course
 app.post('/api/course', validateCourse, AddCourse);
 app.get('/api/course', getAllCourse);

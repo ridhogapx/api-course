@@ -50,6 +50,8 @@ app.use(cors());
 app.post('/api/register', ValidateRegister_1.default, Register_1.default);
 app.post('/api/login', ValidateLogin_1.default, Login_1.default);
 app.get('/api/auth/:token', Auth_1.default);
+// API For starter data 
+app.get('/api/course/setup');
 // API Route for Course
 app.post('/api/course', ValidateCourse_1.default, AddCourse_1.default);
 app.get('/api/course', AllCourse_1.default);
