@@ -4,7 +4,7 @@ const { DataTypes }: any = require('sequelize');
 
 export const Course: any = Orm.define('sus_course', {
 	title: {
-		type: DataTypes.STRING(20),
+		type: DataTypes.STRING(50),
 		allowNull: false
 	},
 	yt_url: {

@@ -10,7 +10,13 @@ const SetupCourse = async(req: any, res: any):Promise <any> => {
 		 	title: course.title,
 		 	yt_url: valid
 		 })
+
 	})
+
+	res.json({
+		 	message: 'Berhasil menambahkan data serentak!',
+		 	success: true
+		 });
 }
 
 export default SetupCourse;
