@@ -8,7 +8,7 @@ export const Course: any = Orm.define('sus_course', {
 		allowNull: false
 	},
 	yt_url: {
-		type: DataTypes.STRING(100),
+		type: DataTypes.STRING(250),
 		allowNull: false
 	}
 });
