@@ -13,11 +13,13 @@ import Register from './models/User/Register';
 
 // Course Model
 import { checkCourseModel, syncCourseModel } from './models/Course/Schema';
+import SetupCourse from './models/Course/SetupCourse';
 import AddCourse from './models/Course/AddCourse';
 import getAllCourse from './models/Course/AllCourse';
 import getSingleCourse from './models/Course/SingleCourse';
 import updateCourse from './models/Course/UpdateCourse';
 import deleteCourse from './models/Course/DeleteCourse';
+
 
 // Auth Token
 import Auth from './routes/Auth';
@@ -61,7 +63,7 @@ app.post('/api/login', validateLogin, Login);
 app.get('/api/auth/:token', Auth);
 
 // API For starter data 
-app.get('/api/course/setup');
+app.get('/api/course/setup', SetupCourse);
 
 // API Route for Course
 app.post('/api/course', validateCourse, AddCourse);

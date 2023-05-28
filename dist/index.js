@@ -15,6 +15,7 @@ const Login_1 = __importDefault(require("./models/User/Login"));
 const Register_1 = __importDefault(require("./models/User/Register"));
 // Course Model
 const Schema_2 = require("./models/Course/Schema");
+const SetupCourse_1 = __importDefault(require("./models/Course/SetupCourse"));
 const AddCourse_1 = __importDefault(require("./models/Course/AddCourse"));
 const AllCourse_1 = __importDefault(require("./models/Course/AllCourse"));
 const SingleCourse_1 = __importDefault(require("./models/Course/SingleCourse"));
@@ -51,7 +52,7 @@ app.post('/api/register', ValidateRegister_1.default, Register_1.default);
 app.post('/api/login', ValidateLogin_1.default, Login_1.default);
 app.get('/api/auth/:token', Auth_1.default);
 // API For starter data 
-app.get('/api/course/setup');
+app.get('/api/course/setup', SetupCourse_1.default);
 // API Route for Course
 app.post('/api/course', ValidateCourse_1.default, AddCourse_1.default);
 app.get('/api/course', AllCourse_1.default);
