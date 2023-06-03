@@ -1,20 +1,21 @@
+import { Request, Response } from "express"
 import { User } from './Schema';
-import ResponseAPI from '../../interfaces/ResponseAPI';
-import generateToken from '../../middlewares/Token/TokenGenerator';
-const { validationResult }: any = require('express-validator');
+import ResponseAPI from '../../interfaces/ResponseAPI'
+import generateToken from '../../middlewares/Token/TokenGenerator'
 
+const { validationResult }: any = require('express-validator')
 
 // For hashing password
-const bcrypt: any = require('bcrypt');
+const bcrypt: any = require('bcrypt')
 
 // Salt rounds
-const salt: number = 10;
+const salt: number = 10
 // Route Register
-const Register = async(req: any, res: any): Promise<any> => {
-	const email: string = req.body.email;
+const Register = async(req: Request, res: Response): Promise<any> => {
+	const email: string = req.body.email
 
 	// Validator input
-	const result:any  = validationResult(req);
+	const result:any  = validationResult(req)
 
 	if(!result.isEmpty()) {
 		return res.json({
@@ -28,7 +29,7 @@ const Register = async(req: any, res: any): Promise<any> => {
 		where: {
 			email: email
 		}
-	});
+	})
 
 	if(!validator.length) {
 		const successResponse: ResponseAPI = {
@@ -44,9 +45,9 @@ const Register = async(req: any, res: any): Promise<any> => {
 			email: email,
 			password: hash,
 			name: req.body.name,
-		});
+		})
 
-		return res.json(successResponse);
+		return res.json(successResponse)
 	} else {
 		const failResponse: ResponseAPI = {
 			message: 'Maaf, akun anda sudah terdaftar!',
@@ -54,9 +55,9 @@ const Register = async(req: any, res: any): Promise<any> => {
 			status: 403,
 			data: []
 		}
-		return res.json(failResponse);
+		return res.json(failResponse)
 	}
 
 }
 
-export default Register;
+export default Register
