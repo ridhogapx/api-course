@@ -25,18 +25,17 @@ import deleteCourse from './models/Course/DeleteCourse';
 import Auth from './routes/Auth';
 
 // Cors for using resource in cross domain
-const cors: any = require('cors');
+const cors = require('cors');
 
 // Module for parsing payload
-const bodyParser: any = require('body-parser');
-const multer: any = require('multer');
+const bodyParser = require('body-parser');
 
 // Validation result
-const { validationResult }: any = require('express-validator');
+const { validationResult } = require('express-validator');
 
 // HTTP Payload Parser
-const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
-const jsonPayload: any = bodyParser.json();
+const urlEncodedParser = bodyParser.urlencoded({extended: false});
+const jsonPayload = bodyParser.json();
 
 // Initialize Express
 const app: Express = express();
