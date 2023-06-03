@@ -25,6 +25,7 @@ const DeleteCourse_1 = __importDefault(require("./models/Course/DeleteCourse"));
 const Auth_1 = __importDefault(require("./routes/Auth"));
 // Auth Google
 const Google_1 = __importDefault(require("./routes/Google"));
+const GoogleCallback_1 = __importDefault(require("./routes/GoogleCallback"));
 // Cors for using resource in cross domain
 const cors = require('cors');
 // Passport for Google auth
@@ -35,7 +36,6 @@ const bodyParser = require('body-parser');
 const { validationResult } = require('express-validator');
 // HTTP Payload Parser
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
-const jsonPayload = bodyParser.json();
 // Initialize Express
 const app = (0, express_1.default)();
 // Port number
@@ -47,7 +47,6 @@ const port = 3001;
 (0, Schema_2.syncCourseModel)();
 // Using payload parser in Express
 app.use(urlEncodedParser);
-app.use(jsonPayload);
 // Using Cors middleware
 app.use(cors());
 // Route for User
@@ -58,6 +57,7 @@ app.get('/api/auth/:token', Auth_1.default);
 (0, Google_1.default)(passport);
 // Route for Google Auth
 app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
+app.get('/auth/google/callback', passport.authenticate('google', { session: false }), GoogleCallback_1.default);
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse_1.default);
 // Route for Course

@@ -25,6 +25,7 @@ import Auth from './routes/Auth'
 
 // Auth Google
 import Google from './routes/Google'
+import GoogleCallback from './routes/GoogleCallback'
 
 // Cors for using resource in cross domain
 const cors = require('cors')
@@ -40,7 +41,6 @@ const { validationResult } = require('express-validator')
 
 // HTTP Payload Parser
 const urlEncodedParser = bodyParser.urlencoded({extended: false})
-const jsonPayload = bodyParser.json()
 
 // Initialize Express
 const app: Express = express()
@@ -54,11 +54,8 @@ syncUserModel()
 checkCourseModel()
 syncCourseModel()
 
-
-
 // Using payload parser in Express
 app.use(urlEncodedParser)
-app.use(jsonPayload)
 
 // Using Cors middleware
 app.use(cors())
@@ -73,6 +70,7 @@ Google(passport)
 
 // Route for Google Auth
 app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile']}))
+app.get('/auth/google/callback', passport.authenticate('google', { session: false}), GoogleCallback)
 
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse)
