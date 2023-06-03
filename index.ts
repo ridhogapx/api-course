@@ -20,29 +20,27 @@ import getSingleCourse from './models/Course/SingleCourse';
 import updateCourse from './models/Course/UpdateCourse';
 import deleteCourse from './models/Course/DeleteCourse';
 
-
 // Auth Token
 import Auth from './routes/Auth';
 
 // Cors for using resource in cross domain
-const cors: any = require('cors');
+const cors = require('cors');
 
 // Module for parsing payload
-const bodyParser: any = require('body-parser');
-const multer: any = require('multer');
+const bodyParser = require('body-parser');
 
 // Validation result
-const { validationResult }: any = require('express-validator');
+const { validationResult } = require('express-validator');
 
 // HTTP Payload Parser
-const urlEncodedParser:any = bodyParser.urlencoded({extended: false});
-const jsonPayload: any = bodyParser.json();
+const urlEncodedParser = bodyParser.urlencoded({extended: false});
+const jsonPayload = bodyParser.json();
 
 // Initialize Express
 const app: Express = express();
 
 // Port number
-const port: number = 3000;
+const port: number = 3001;
 
 // Defining Model Database
 checkUserModel();
@@ -57,15 +55,15 @@ app.use(jsonPayload);
 // Using Cors middleware
 app.use(cors());
 
-// API Route for User
+// Route for User
 app.post('/api/register' , validateRegister, Register);
 app.post('/api/login', validateLogin, Login);
 app.get('/api/auth/:token', Auth);
 
-// API For starter data 
+// Route For starter data 
 app.get('/api/course/setup', SetupCourse);
 
-// API Route for Course
+// Route for Course
 app.post('/api/course', validateCourse, AddCourse);
 app.get('/api/course', getAllCourse);
 app.get('/api/course/:id', getSingleCourse);

@@ -27,7 +27,6 @@ const Auth_1 = __importDefault(require("./routes/Auth"));
 const cors = require('cors');
 // Module for parsing payload
 const bodyParser = require('body-parser');
-const multer = require('multer');
 // Validation result
 const { validationResult } = require('express-validator');
 // HTTP Payload Parser
@@ -36,7 +35,7 @@ const jsonPayload = bodyParser.json();
 // Initialize Express
 const app = (0, express_1.default)();
 // Port number
-const port = 3000;
+const port = 3001;
 // Defining Model Database
 (0, Schema_1.checkUserModel)();
 (0, Schema_1.syncUserModel)();
@@ -47,13 +46,13 @@ app.use(urlEncodedParser);
 app.use(jsonPayload);
 // Using Cors middleware
 app.use(cors());
-// API Route for User
+// Route for User
 app.post('/api/register', ValidateRegister_1.default, Register_1.default);
 app.post('/api/login', ValidateLogin_1.default, Login_1.default);
 app.get('/api/auth/:token', Auth_1.default);
-// API For starter data 
+// Route For starter data 
 app.get('/api/course/setup', SetupCourse_1.default);
-// API Route for Course
+// Route for Course
 app.post('/api/course', ValidateCourse_1.default, AddCourse_1.default);
 app.get('/api/course', AllCourse_1.default);
 app.get('/api/course/:id', SingleCourse_1.default);
