@@ -1,9 +1,9 @@
-import { Course } from './Schema';
-import ResponseAPI from '../../interfaces/ResponseAPI';
+import { Course } from './Schema'
+import ResponseAPI from '../../interfaces/ResponseAPI'
 
 const getAllCourse = async(req: any, res:any): Promise<any> => {
 	try {
-		const allCourse = await Course.findAll();
+		const allCourse = await Course.findAll()
 		const successResponse: ResponseAPI = {
 			message: 'Berhasil mendapatkan data materi!',
 			success: true,
@@ -11,7 +11,7 @@ const getAllCourse = async(req: any, res:any): Promise<any> => {
 			data: allCourse
 		}
 
-		return res.json(successResponse);
+		return res.json(successResponse)
 	} catch(err) {
 		const failResponse: ResponseAPI = {
 			message: 'Data tidak ditemukan!',
@@ -19,8 +19,8 @@ const getAllCourse = async(req: any, res:any): Promise<any> => {
 			status: 404,
 			data: []
 		}
-		return res.json(failResponse);
+		return res.json(failResponse)
 	}
 }
 
-export default getAllCourse;
+export default getAllCourse
