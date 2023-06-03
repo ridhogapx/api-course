@@ -1,5 +1,5 @@
-import { User } from "../models/User/Schema"
-
+import { User } from '../models/User/Schema'
+import generateToken from '../middlewares/Token/TokenGenerator'
 // Passport & Strategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy()
 
@@ -21,8 +21,10 @@ const Google = (passport: any): void => {
             }
         })
 
+        // Must return response for token
         if(checkUser.length) {
-            return done(null, true);
+            const token: string = generateToken(profile.emails[0].value, checkUser[0].role)
+            return done(null, true)
         }
 
         await User.create({
