@@ -57,15 +57,15 @@ app.use(jsonPayload);
 // Using Cors middleware
 app.use(cors());
 
-// API Route for User
+// Route for User
 app.post('/api/register' , validateRegister, Register);
 app.post('/api/login', validateLogin, Login);
 app.get('/api/auth/:token', Auth);
 
-// API For starter data 
+// Route For starter data 
 app.get('/api/course/setup', SetupCourse);
 
-// API Route for Course
+// Route for Course
 app.post('/api/course', validateCourse, AddCourse);
 app.get('/api/course', getAllCourse);
 app.get('/api/course/:id', getSingleCourse);
