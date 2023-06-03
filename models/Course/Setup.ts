@@ -1,4 +1,4 @@
-import Course from '../../interfaces/Course';
+import Course from '../../interfaces/Course'
 
 const Setup: Course[] = [
 	{
@@ -59,4 +59,4 @@ const Setup: Course[] = [
 	},
 ]
 
-export default Setup;
+export default Setup
