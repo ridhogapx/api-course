@@ -1,5 +1,5 @@
-import { Course } from './Schema';
-import ResponseAPI from '../../interfaces/ResponseAPI';
+import { Course } from './Schema'
+import ResponseAPI from '../../interfaces/ResponseAPI'
 
 const getSingleCourse = async(req: any, res: any): Promise<any> => {
 	const id = req.params.id
@@ -18,7 +18,7 @@ const getSingleCourse = async(req: any, res: any): Promise<any> => {
 				status: 404,
 				data: []
 		}
-			return res.json(failResponse);
+			return res.json(failResponse)
 		}
 
 		const successResponse: ResponseAPI = {
@@ -28,7 +28,7 @@ const getSingleCourse = async(req: any, res: any): Promise<any> => {
 			data: singleCourse
 		}
 
-		return res.json(successResponse);
+		return res.json(successResponse)
 
 	} catch(err) {
 		const failResponse: ResponseAPI = {
@@ -37,7 +37,7 @@ const getSingleCourse = async(req: any, res: any): Promise<any> => {
 			status: 404,
 			data: []
 		}
-		return res.json(failResponse);
+		return res.json(failResponse)
 	}
 }
-export default getSingleCourse;
+export default getSingleCourse

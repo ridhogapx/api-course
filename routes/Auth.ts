@@ -1,13 +1,13 @@
 // Import interfaces TS
-import ResponseAPI from '../interfaces/ResponseAPI';
+import ResponseAPI from '../interfaces/ResponseAPI'
 // Import Secret
-import SECRET_KEY from '../middlewares/Token/Secret';
+import SECRET_KEY from '../middlewares/Token/Secret'
 
 // JWT Library
-const jwt: any = require('jsonwebtoken');
+const jwt: any = require('jsonwebtoken')
 
 const Auth = (req: any, res: any): void => {
-	const token = req.params.token;
+	const token = req.params.token
 
 	try {
 		// Verify token user
@@ -27,9 +27,9 @@ const Auth = (req: any, res: any): void => {
 			status: 403,
 			data: []
 		}
-		res.json(fail);
+		res.json(fail)
 	}
 	
 } 
 
-export default Auth;
+export default Auth

@@ -1,20 +1,20 @@
-import { Course } from './Schema';
-import ResponseAPI from '../../interfaces/ResponseAPI';
-import checkID from '../../middlewares/ValidateDB/ValidateID';
+import { Course } from './Schema'
+import ResponseAPI from '../../interfaces/ResponseAPI'
+import checkID from '../../middlewares/ValidateDB/ValidateID'
 
-const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator')
 
 const updateCourse = async(req: any, res:any): Promise <any> => {
-	const result = validationResult(req);
-	const id = req.params.id;
+	const result = validationResult(req)
+	const id = req.params.id
 
 	if(!result.isEmpty()) {
 		return res.json({
 			errors: result.array()
-		});
+		})
 	}
 
-	const validateID: boolean = await checkID(id);
+	const validateID: boolean = await checkID(id)
 
 	if(!validateID) {
 		const notFoundID: ResponseAPI = {
@@ -24,11 +24,11 @@ const updateCourse = async(req: any, res:any): Promise <any> => {
 			data: []
 		};
 
-		return res.json(notFoundID);
+		return res.json(notFoundID)
 	}
 
-	const YT_URL: any = req.body.yt_url;
-	const valid_url: any = YT_URL.replaceAll('&#x2F;', '/');
+	const YT_URL: any = req.body.yt_url
+	const valid_url: any = YT_URL.replaceAll('&#x2F;', '/')
 
 	const successResponse: ResponseAPI = {
 			message: 'Berhasil merubah data!',
@@ -42,7 +42,7 @@ const updateCourse = async(req: any, res:any): Promise <any> => {
 		success: false,
 		status: 403,
 		data: [],
-	};
+	}
 
 	try{
 		await Course.update({
@@ -52,12 +52,12 @@ const updateCourse = async(req: any, res:any): Promise <any> => {
 			where: {
 				id: id
 			}
-		});
+		})
 
-		return res.json(successResponse);
+		return res.json(successResponse)
 	} catch(err) {
-		return res.json(failResponse);
+		return res.json(failResponse)
 	}
 }
 
-export default updateCourse;
+export default updateCourse

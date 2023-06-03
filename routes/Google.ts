@@ -1,10 +1,10 @@
-import { User } from "../models/User/Schema";
+import { User } from "../models/User/Schema"
 
 // Passport & Strategy
-const GoogleStrategy = require('passport-google-oauth2').Strategy();
+const GoogleStrategy = require('passport-google-oauth2').Strategy()
 
 // Dotenv for accessing API Google
-const dotenv = require('dotenv');
+const dotenv = require('dotenv')
 dotenv.config();
 
 // Shall continue this
@@ -19,7 +19,7 @@ const Google = (passport: any): void => {
             where: {
                 email: profile.emails[0].value
             }
-        });
+        })
 
         if(checkUser.length) {
             return done(null, true);
@@ -29,7 +29,7 @@ const Google = (passport: any): void => {
             email: profile.emails[0].value,
             password: '',
             name: profile.dispayName
-        });
+        })
      
         return done(null, true);
     } 
@@ -37,4 +37,4 @@ const Google = (passport: any): void => {
     ))
 }
 
-export default Google;
+export default Google

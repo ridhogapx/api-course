@@ -1,4 +1,4 @@
-const { Sequelize} = require('sequelize');
+const { Sequelize} = require('sequelize')
 
 const Orm:any = new Sequelize(
 	'course_api',
@@ -9,4 +9,4 @@ const Orm:any = new Sequelize(
 		dialect: 'mysql'
 	});
 
-export default Orm;
+export default Orm
