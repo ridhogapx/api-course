@@ -1,6 +1,6 @@
-import Orm from '../ConfigDB';
+import Orm from '../ConfigDB'
 
-const { DataTypes }: any = require('sequelize');
+const { DataTypes }: any = require('sequelize')
 
 export const User: any = Orm.define('sus_users', {
 	email: {
@@ -24,16 +24,16 @@ export const User: any = Orm.define('sus_users', {
 
 export const checkUserModel = async(): Promise<void> => {
 	try {
-		await Orm.authenticate();
+		await Orm.authenticate()
 	} catch(err) {
-		console.log(`Failed to connect database ${err}`);
+		console.log(`Failed to connect database ${err}`)
 	}
 }
 
 export const syncUserModel = async(): Promise<void> => {
 	try {
-		await Orm.sync();
+		await Orm.sync()
 	} catch (err) {
-		console.log(`Can't create table sus_users`);
+		console.log(`Can't create table sus_users`)
 	}
 }
