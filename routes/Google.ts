@@ -1,7 +1,7 @@
 import { User } from '../models/User/Schema'
 import generateToken from '../middlewares/Token/TokenGenerator'
 // Passport & Strategy
-const GoogleStrategy = require('passport-google-oauth2').Strategy()
+const GoogleStrategy = require('passport-google-oauth2').Strategy
 
 // Dotenv for accessing API Google
 const dotenv = require('dotenv')
@@ -21,9 +21,7 @@ const Google = (passport: any): void => {
             }
         })
 
-        // Must return response for token
         if(checkUser.length) {
-            const token: string = generateToken(profile.emails[0].value, checkUser[0].role)
             return done(null, true)
         }
 

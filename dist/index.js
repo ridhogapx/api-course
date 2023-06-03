@@ -23,8 +23,12 @@ const UpdateCourse_1 = __importDefault(require("./models/Course/UpdateCourse"));
 const DeleteCourse_1 = __importDefault(require("./models/Course/DeleteCourse"));
 // Auth Token
 const Auth_1 = __importDefault(require("./routes/Auth"));
+// Auth Google
+const Google_1 = __importDefault(require("./routes/Google"));
 // Cors for using resource in cross domain
 const cors = require('cors');
+// Passport for Google auth
+const passport = require('passport');
 // Module for parsing payload
 const bodyParser = require('body-parser');
 // Validation result
@@ -50,6 +54,10 @@ app.use(cors());
 app.post('/api/register', ValidateRegister_1.default, Register_1.default);
 app.post('/api/login', ValidateLogin_1.default, Login_1.default);
 app.get('/api/auth/:token', Auth_1.default);
+// Initialize Google API Config
+(0, Google_1.default)(passport);
+// Route for Google Auth
+app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse_1.default);
 // Route for Course
