@@ -1,10 +1,10 @@
-import { Course } from './Schema';
-import ResponseAPI from '../../interfaces/ResponseAPI';
-import checkID from '../../middlewares/ValidateDB/ValidateID';
+import { Course } from './Schema'
+import ResponseAPI from '../../interfaces/ResponseAPI'
+import checkID from '../../middlewares/ValidateDB/ValidateID'
 
 const deleteCourse = async(req: any, res: any): Promise<any> => {
-	const id = req.params.id;
-	const validate = await checkID(id);
+	const id = req.params.id
+	const validate = await checkID(id)
 
 	if(!validate) {
 		const notFound: ResponseAPI = {
@@ -14,14 +14,14 @@ const deleteCourse = async(req: any, res: any): Promise<any> => {
 			data: []
 		}
 
-		return res.json(notFound);
+		return res.json(notFound)
 	}
 
 	await Course.destroy({
 		where: {
 			id: id
 		}
-	});
+	})
 
 	const successResponse: ResponseAPI = {
 		message: 'Berhasil menghapus data!',
@@ -30,7 +30,7 @@ const deleteCourse = async(req: any, res: any): Promise<any> => {
 		data: []
 	}
 
-	return res.json(successResponse);
+	return res.json(successResponse)
 }
 
-export default deleteCourse;
+export default deleteCourse
