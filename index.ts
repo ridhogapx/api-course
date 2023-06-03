@@ -20,7 +20,6 @@ import getSingleCourse from './models/Course/SingleCourse';
 import updateCourse from './models/Course/UpdateCourse';
 import deleteCourse from './models/Course/DeleteCourse';
 
-
 // Auth Token
 import Auth from './routes/Auth';
 
