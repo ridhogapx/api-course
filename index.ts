@@ -40,7 +40,7 @@ const jsonPayload = bodyParser.json();
 const app: Express = express();
 
 // Port number
-const port: number = 3000;
+const port: number = 3001;
 
 // Defining Model Database
 checkUserModel();

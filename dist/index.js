@@ -35,7 +35,7 @@ const jsonPayload = bodyParser.json();
 // Initialize Express
 const app = (0, express_1.default)();
 // Port number
-const port = 3000;
+const port = 3001;
 // Defining Model Database
 (0, Schema_1.checkUserModel)();
 (0, Schema_1.syncUserModel)();
