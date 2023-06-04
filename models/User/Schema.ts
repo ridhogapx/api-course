@@ -1,8 +1,8 @@
 import Orm from '../ConfigDB'
 
-const { DataTypes }: any = require('sequelize')
+const { DataTypes } = require('sequelize')
 
-export const User: any = Orm.define('sus_users', {
+export const User = Orm.define('sus_users', {
 	email: {
 		type: DataTypes.STRING(50),
 		allowNull: false,
