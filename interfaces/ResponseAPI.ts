@@ -1,8 +1,12 @@
+type Token = {
+	token: string
+}
+
 interface ResponseAPI {
 	message: string,
 	success: boolean,
 	status: number,
-	data: any[]
+	data: Token[]
 }
 
 export default ResponseAPI;

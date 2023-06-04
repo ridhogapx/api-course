@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { User } from './Schema';
 import ResponseAPI from '../../interfaces/ResponseAPI'
 import generateToken from '../../middlewares/Token/TokenGenerator'
+import Model from '../../types/Model'
 
 const { validationResult }: any = require('express-validator')
 
@@ -11,7 +12,7 @@ const bcrypt: any = require('bcrypt')
 // Salt rounds
 const salt: number = 10
 // Route Register
-const Register = async(req: Request, res: Response): Promise<any> => {
+const Register: Model = async(req: Request, res: Response): Promise<any> => {
 	const email: string = req.body.email
 
 	// Validator input

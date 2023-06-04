@@ -2,13 +2,16 @@ import { Request, Response } from "express"
 import { User } from './Schema'
 import generateToken from '../../middlewares/Token/TokenGenerator'
 import ResponseAPI from '../../interfaces/ResponseAPI'
+import Model from '../../types/Model'
+import Error from '../../interfaces/Error'
 
-const { validationResult }: any = require('express-validator')
+const { validationResult } = require('express-validator')
+
 
 const bcrypt: any = require('bcrypt')
 
 // Route Login
-const Login = async(req: Request, res: Response): Promise<any> => {
+const Login: Model = async(req: Request, res: Response): Promise<Response | undefined> => {
 	const emailInput: string = req.body.email
 	const passInput: string = req.body.password
 	const result: any = validationResult(req)
@@ -28,12 +31,10 @@ const Login = async(req: Request, res: Response): Promise<any> => {
 		}
 	})
 
-	const role: number = validator[0].role
-
 	if(validator.length) {
 		try {
 			const validatePass = await bcrypt.compare(passInput, validator[0].password)
-
+			const role: number = validator[0].role
 			if(validatePass) {
 				const token: string = generateToken(emailInput, role)
 				const successResponse: ResponseAPI = {
