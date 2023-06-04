@@ -3,7 +3,7 @@ import { User } from '../models/User/Schema'
 import ResponseAPI from '../interfaces/ResponseAPI'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
-const GoogleCallback = (req: Request, res: Response): Response => {
+const GoogleProtected = (req: Request, res: Response): Response => {
 	
 
 	const responseCallback: ResponseAPI = {
@@ -16,4 +16,4 @@ const GoogleCallback = (req: Request, res: Response): Response => {
 	return res.json(responseCallback)
 }
 
-export default GoogleCallback
+export default GoogleProtected

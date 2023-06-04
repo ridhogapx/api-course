@@ -28,7 +28,7 @@ import Auth from './routes/Auth'
 
 // Auth Google
 import Google from './routes/Google'
-import GoogleCallback from './routes/GoogleCallback'
+import GoogleProtected from './routes/GoogleProtected'
 
 // Session
 const expressSession = require("express-session");
@@ -79,8 +79,8 @@ app.get('/api/auth/:token', Auth)
 Google(passport)
 
 // Route for Google Auth
-app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile']}))
-// app.get('/auth/google/callback', passport.authenticate('google', { session: false}), GoogleCallback)
+app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected'} ))
+app.get('/auth/protected', GoogleProtected)
 
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse)
