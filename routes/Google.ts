@@ -15,7 +15,7 @@ const Google = (passport: any): void => {
     passport.use(new GoogleStrategy({
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
-        callbackURL: 'http://localhost:3001/auth/google/callback',
+        callbackURL: 'http://sus.penguincadel.my.id/auth/google/callback',
         passReqToCallback: true
     }, async(request: any, accessToken: any, refreshToken: any, profile: any, done: any): Promise<any> => {
         const checkUser = await GoogleSchema.findAll({
