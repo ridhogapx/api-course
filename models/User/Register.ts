@@ -12,7 +12,7 @@ const bcrypt: any = require('bcrypt')
 // Salt rounds
 const salt: number = 10
 // Route Register
-const Register: Model = async(req: Request, res: Response): Promise<any> => {
+const Register: Model = async(req: Request, res: Response): Promise<Response | undefined > => {
 	const email: string = req.body.email
 
 	// Validator input

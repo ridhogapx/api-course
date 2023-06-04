@@ -26,6 +26,8 @@ const Auth_1 = __importDefault(require("./routes/Auth"));
 // Auth Google
 const Google_1 = __importDefault(require("./routes/Google"));
 const GoogleCallback_1 = __importDefault(require("./routes/GoogleCallback"));
+// Session
+const expressSession = require("express-session");
 // Cors for using resource in cross domain
 const cors = require('cors');
 // Passport for Google auth
@@ -47,6 +49,7 @@ const port = 3001;
 (0, Schema_2.syncCourseModel)();
 // Using payload parser in Express
 app.use(urlEncodedParser);
+app.use(expressSession({ resave: false, saveUninitialized: true, secret: 'testing' }));
 // Using Cors middleware
 app.use(cors());
 // Route for User

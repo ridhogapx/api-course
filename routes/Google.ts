@@ -1,5 +1,8 @@
 import { User } from '../models/User/Schema'
 import generateToken from '../middlewares/Token/TokenGenerator'
+
+const bcrypt = require('bcrypt')
+
 // Passport & Strategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 
@@ -22,15 +25,20 @@ const Google = (passport: any): void => {
         })
 
         if(checkUser.length) {
+
             return done(null, true)
         } else {
+            const salt: number = 90
+            const randNumber: number = Math.floor(Math.random() * 23)
+
+            const crypted: string = await bcrypt(randNumber, salt)
+            
             await User.create({
                 email: profile.emails[0].value,
-                password: '',
+                password: crypted,
                 name: profile.displayName
             })
         }
-     
         return done(null, true);
     } 
     

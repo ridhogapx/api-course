@@ -7,19 +7,20 @@ import Error from '../../interfaces/Error'
 
 const { validationResult } = require('express-validator')
 
-
-const bcrypt: any = require('bcrypt')
+const bcrypt = require('bcrypt')
 
 // Route Login
 const Login: Model = async(req: Request, res: Response): Promise<Response | undefined> => {
 	const emailInput: string = req.body.email
 	const passInput: string = req.body.password
-	const result: any = validationResult(req)
+	const result = validationResult(req)
 
 	// Validating input 
 	if(!result.isEmpty()) {
+		const errorValidation: Error = result.array()
+
 		return res.json({
-			errors: result.array()
+			errors: errorValidation
 		})
 
 	}
