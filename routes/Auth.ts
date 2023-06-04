@@ -1,7 +1,10 @@
 // Import interfaces TS
 import ResponseAPI from '../interfaces/ResponseAPI'
-// Import Secret
-import SECRET_KEY from '../middlewares/Token/Secret'
+
+// Dotenv for accessing sensitive data
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 // JWT Library
 const jwt: any = require('jsonwebtoken')
@@ -11,7 +14,7 @@ const Auth = (req: any, res: any): void => {
 
 	try {
 		// Verify token user
-		const decoded:any = jwt.verify(token, SECRET_KEY);
+		const decoded:any = jwt.verify(token, process.env.SECRET);
 		const success: ResponseAPI = {
 			message: 'Authentikasi berhasil',
 			success: true,
