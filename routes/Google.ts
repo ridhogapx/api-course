@@ -33,7 +33,11 @@ const Google = (passport: any): void => {
             })
         }
         return done(null, true);
-    } 
+    }, passport.serializeUser((user: any, done: any): void => {
+        done(null, user)
+    }), passport.deserializeUser((user: any, done: any): void => {
+        done(null, user)
+    }) 
     
     ))
 }
