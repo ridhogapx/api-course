@@ -1,4 +1,4 @@
-import { User } from '../models/User/Schema'
+import { GoogleSchema } from '../models/Google/Schema'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
 const bcrypt = require('bcrypt')
@@ -18,7 +18,7 @@ const Google = (passport: any): void => {
         callbackURL: 'http://localhost:3001/auth/google/callback',
         passReqToCallback: true
     }, async(request: any, accessToken: any, refreshToken: any, profile: any, done: any): Promise<any> => {
-        const checkUser = await User.findAll({
+        const checkUser = await GoogleSchema.findAll({
             where: {
                 email: profile.emails[0].value
             }
@@ -28,14 +28,8 @@ const Google = (passport: any): void => {
 
             return done(null, true)
         } else {
-            const salt: number = 90
-            const randNumber: number = Math.floor(Math.random() * 23)
-
-            const crypted: string = await bcrypt(randNumber, salt)
-            
-            await User.create({
+            await GoogleSchema.create({
                 email: profile.emails[0].value,
-                password: crypted,
                 name: profile.displayName
             })
         }
