@@ -6,6 +6,9 @@ import validateLogin from './middlewares/ValidateInput/ValidateLogin'
 import validateRegister from './middlewares/ValidateInput/ValidateRegister'
 import validateCourse from './middlewares/ValidateInput/ValidateCourse'
 
+// Google Auth Model
+import { checkGoogleModel, syncGoogleModel} from './models/Google/Schema'
+
 // User Model
 import { checkUserModel, syncUserModel} from './models/User/Schema'
 import Login from './models/User/Login'
@@ -54,6 +57,8 @@ const port: number = 3001
 // Defining Model Database
 checkUserModel()
 syncUserModel()
+checkGoogleModel()
+syncGoogleModel()
 checkCourseModel()
 syncCourseModel()
 
