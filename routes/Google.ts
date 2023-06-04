@@ -25,7 +25,6 @@ const Google = (passport: any): void => {
         })
 
         if(checkUser.length) {
-
             return done(null, true)
         } else {
             await GoogleSchema.create({

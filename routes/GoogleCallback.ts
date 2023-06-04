@@ -3,7 +3,7 @@ import { User } from '../models/User/Schema'
 import ResponseAPI from '../interfaces/ResponseAPI'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
-const GoogleCallback = (req: Request, res: Response): void => {
+const GoogleCallback = (req: Request, res: Response): Response => {
 	
 
 	const responseCallback: ResponseAPI = {
@@ -13,7 +13,7 @@ const GoogleCallback = (req: Request, res: Response): void => {
 		data: []
 	}
 
-	res.json(responseCallback)
+	return res.json(responseCallback)
 }
 
 export default GoogleCallback
