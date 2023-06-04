@@ -79,8 +79,8 @@ app.get('/api/auth/:token', Auth)
 Google(passport)
 
 // Route for Google Auth
-app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile']}))
-app.get('/auth/google/callback', passport.authenticate('google', { session: false}), GoogleCallback)
+app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile']}))
+// app.get('/auth/google/callback', passport.authenticate('google', { session: false}), GoogleCallback)
 
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse)
