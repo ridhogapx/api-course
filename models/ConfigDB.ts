@@ -1,11 +1,14 @@
 const { Sequelize} = require('sequelize')
+const dotenv = require('dotenv')
 
-const Orm:any = new Sequelize(
+dotenv.config()
+
+const Orm = new Sequelize(
 	'course_api',
-	'root',
-	'',
+	process.env.DB_USER,
+	process.env.DB_PASS,
 	{
-		host: 'localhost',
+		host: process.env.DB_HOST,
 		dialect: 'mysql'
 	});
 
