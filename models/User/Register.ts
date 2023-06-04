@@ -3,11 +3,12 @@ import { User } from './Schema';
 import ResponseAPI from '../../interfaces/ResponseAPI'
 import generateToken from '../../middlewares/Token/TokenGenerator'
 import Model from '../../types/Model'
+import Error from '../../interfaces/Error'
 
 const { validationResult }: any = require('express-validator')
 
 // For hashing password
-const bcrypt: any = require('bcrypt')
+const bcrypt = require('bcrypt')
 
 // Salt rounds
 const salt: number = 10
@@ -16,11 +17,13 @@ const Register: Model = async(req: Request, res: Response): Promise<Response | u
 	const email: string = req.body.email
 
 	// Validator input
-	const result:any  = validationResult(req)
+	const result  = validationResult(req)
 
 	if(!result.isEmpty()) {
+		const validationError: Error = result.array()
+
 		return res.json({
-			errors: result.array()
+			errors: validationError
 		})
 	}
 

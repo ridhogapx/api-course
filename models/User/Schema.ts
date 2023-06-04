@@ -4,7 +4,7 @@ const { DataTypes }: any = require('sequelize')
 
 export const User: any = Orm.define('sus_users', {
 	email: {
-		type: DataTypes.STRING(20),
+		type: DataTypes.STRING(50),
 		allowNull: false,
 	},
 	password: {

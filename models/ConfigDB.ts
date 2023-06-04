@@ -5,8 +5,8 @@ dotenv.config()
 
 const Orm = new Sequelize(
 	'course_api',
-	process.env.DB_USER,
-	process.env.DB_PASS,
+	'root',
+	'DBRidho-Tech',
 	{
 		host: process.env.DB_HOST,
 		dialect: 'mysql'
