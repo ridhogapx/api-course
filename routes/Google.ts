@@ -23,13 +23,13 @@ const Google = (passport: any): void => {
 
         if(checkUser.length) {
             return done(null, true)
+        } else {
+            await User.create({
+                email: profile.emails[0].value,
+                password: '',
+                name: profile.displayName
+            })
         }
-
-        await User.create({
-            email: profile.emails[0].value,
-            password: '',
-            name: profile.displayName
-        })
      
         return done(null, true);
     } 
