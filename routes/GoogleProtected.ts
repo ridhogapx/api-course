@@ -3,7 +3,7 @@ import { GoogleSchema } from '../models/Google/Schema'
 import ResponseAPI from '../interfaces/ResponseAPI'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
-const GoogleProtected = async(req: Request | any, res: Response): Promise<Response> => {
+const GoogleProtected = async(req: Request | any, res: Response): Promise<Response | undefined> => {
 	const finder = await GoogleSchema.findAll({
 		where: {
 			email: req.user.email
