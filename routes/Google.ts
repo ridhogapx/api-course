@@ -1,6 +1,3 @@
-import { GoogleSchema } from '../models/Google/Schema'
-import generateToken from '../middlewares/Token/TokenGenerator'
-
 // Session
 const session = require("express-session");
 
@@ -21,10 +18,13 @@ const Google = (passport: any): void => {
         clientSecret: process.env.clientSecret,
         callbackURL: 'http://sus.penguincadel.my.id/auth/google/callback',
         passReqToCallback: true
-    }, (request: any, accessToken: any, refreshToken: any, profile: any, done: any): any  => {
-          
+    }, async(request: any, accessToken: any, refreshToken: any, profile: any, done: any): Promise<any>  => {
+        const user = {
+            email: profile.emails[0].value,
+            displayName: profile.displayName
+        }
 
-        return done(null, true);
+        return done(null, user);
     }, passport.serializeUser((user: any, done: any): void => {
         done(null, user)
     }), passport.deserializeUser((user: any, done: any): void => {

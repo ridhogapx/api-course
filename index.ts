@@ -82,6 +82,9 @@ app.get('/api/auth/:token', Auth)
 
 // Initialize Google API Config
 Google(passport)
+app.use(passport.initialize())
+app.use(passport.session())
+
 
 // Route for Google Auth
 app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected'} ))
