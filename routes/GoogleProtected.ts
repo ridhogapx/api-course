@@ -18,12 +18,17 @@ const GoogleProtected = async(req: Request | any, res: Response): Promise<Respon
 
 		// return res.redirect('http://localhost:5173/' + token)
 		
-	} 
-	await GoogleSchema.create({
-		email: req.user.email,
-		name: req.user.displayName
-	})
+	} else {
+		await GoogleSchema.create({
+			email: req.user.email,
+			name: req.user.displayName
+		})
+
+		GoogleProtected()
+	}
 	
+	
+
 
 }
 
