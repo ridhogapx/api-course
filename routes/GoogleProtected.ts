@@ -15,7 +15,7 @@ const GoogleProtected = async(req: Request | any, res: Response): Promise<Respon
 
 	const token: string = generateToken(email,role)
 
-	return res.redirect(`http://localhost:5173/${token}`)
+	return res.redirect(`http://localhost:5173/auth/${token}`)
 
 
 }
