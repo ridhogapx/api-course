@@ -87,7 +87,7 @@ app.use(passport.session())
 
 
 // Route for Google Auth
-app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected'} ))
+app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected', failureRedirect: '/auth/fail'} ))
 app.get('/auth/protected', GoogleProtected)
 
 // Route For starter data 
