@@ -3,31 +3,19 @@ import { GoogleSchema } from '../models/Google/Schema'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
 const GoogleProtected = async(req: Request | any, res: Response): Promise<Response | void> => {
-	const finder = await GoogleSchema.findAll({
+	const [user, created] = await GoogleSchema.findOrCreate({
 		where: {
-			email: req.user.email
+			email: req.user.email,
+			name: req.user.displayName
 		}
 	})
 
-	if(finder.length) {
-		const role: number = finder[0].role
-		const email: string = finder[0].email
-		const token: string = generateToken(email,role)
+	const role: number = user.role
+	const email: string = user.email
 
-		return res.redirect('http://localhost:5173/'+ token)
+	const token: string = generateToken(email,role)
 
-		// return res.redirect('http://localhost:5173/' + token)
-		
-	} else {
-		await GoogleSchema.create({
-			email: req.user.email,
-			name: req.user.displayName
-		})
-
-		GoogleProtected()
-	}
-	
-	
+	return res.redirect(`http://localhost:5173/${token}`)
 
 
 }

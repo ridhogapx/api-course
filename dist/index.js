@@ -28,10 +28,10 @@ const Auth_1 = __importDefault(require("./routes/Auth"));
 // Auth Google
 const Google_1 = __importDefault(require("./routes/Google"));
 const GoogleProtected_1 = __importDefault(require("./routes/GoogleProtected"));
-// Session
-const expressSession = require("express-session");
 // Cors for using resource in cross domain
 const cors = require('cors');
+// Session
+const session = require("express-session");
 // Passport for Google auth
 const passport = require('passport');
 // Dotenv for accessing sensitive data
@@ -56,18 +56,20 @@ const port = 3001;
 (0, Schema_3.syncCourseModel)();
 // Using payload parser in Express
 app.use(urlEncodedParser);
-// Session management
-app.use(expressSession({ resave: false, saveUninitialized: true, secret: process.env.SECRET }));
 // Using Cors middleware
 app.use(cors());
+// Session options
+app.use(session({ resave: false, saveUninitialized: true, secret: process.env.SECRET }));
 // Route for User
 app.post('/api/register', ValidateRegister_1.default, Register_1.default);
 app.post('/api/login', ValidateLogin_1.default, Login_1.default);
 app.get('/api/auth/:token', Auth_1.default);
 // Initialize Google API Config
 (0, Google_1.default)(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 // Route for Google Auth
-app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected' }));
+app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected', failureRedirect: '/auth/fail' }));
 app.get('/auth/protected', GoogleProtected_1.default);
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse_1.default);
