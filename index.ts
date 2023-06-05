@@ -30,9 +30,6 @@ import Auth from './routes/Auth'
 import Google from './routes/Google'
 import GoogleProtected from './routes/GoogleProtected'
 
-// Session
-const expressSession = require("express-session");
-
 // Cors for using resource in cross domain
 const cors = require('cors')
 
@@ -68,9 +65,6 @@ syncCourseModel()
 
 // Using payload parser in Express
 app.use(urlEncodedParser)
-
-// Session management
-app.use(expressSession({ resave: false, saveUninitialized: true, secret: process.env.SECRET}))
 
 // Using Cors middleware
 app.use(cors())

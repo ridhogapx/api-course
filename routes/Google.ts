@@ -1,12 +1,18 @@
 import { GoogleSchema } from '../models/Google/Schema'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
+// Session
+const session = require("express-session");
+
 // Passport & Strategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 
 // Dotenv for accessing API Google
 const dotenv = require('dotenv')
 dotenv.config();
+
+// Session options
+session({ resave: false, saveUninitialized: true, secret: process.env.SECRET})
 
 // Shall continue this
 const Google = (passport: any): void => {
@@ -16,6 +22,8 @@ const Google = (passport: any): void => {
         callbackURL: 'http://sus.penguincadel.my.id/auth/google/callback',
         passReqToCallback: true
     }, (request: any, accessToken: any, refreshToken: any, profile: any, done: any): any  => {
+          
+
         return done(null, true);
     }, passport.serializeUser((user: any, done: any): void => {
         done(null, user)
