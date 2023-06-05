@@ -33,6 +33,9 @@ import GoogleProtected from './routes/GoogleProtected'
 // Cors for using resource in cross domain
 const cors = require('cors')
 
+// Session
+const session = require("express-session");
+
 // Passport for Google auth
 const passport = require('passport') 
 
@@ -68,6 +71,9 @@ app.use(urlEncodedParser)
 
 // Using Cors middleware
 app.use(cors())
+
+// Session options
+app.use(session({ resave: false, saveUninitialized: true, secret: process.env.SECRET}))
 
 // Route for User
 app.post('/api/register' , validateRegister, Register)
