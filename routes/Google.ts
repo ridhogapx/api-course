@@ -19,12 +19,7 @@ const Google = (passport: any): void => {
         callbackURL: 'http://sus.penguincadel.my.id/auth/google/callback',
         passReqToCallback: true
     }, async(request: any, accessToken: any, refreshToken: any, profile: any, done: any): Promise<any>  => {
-        const user = {
-            email: profile.emails[0].value,
-            displayName: profile.displayName
-        }
-
-        return done(null, user);
+        return done(null, profile);
     }, passport.serializeUser((user: any, done: any): void => {
         done(null, user)
     }), passport.deserializeUser((user: any, done: any): void => {
