@@ -1,8 +1,6 @@
 import { GoogleSchema } from '../models/Google/Schema'
 import generateToken from '../middlewares/Token/TokenGenerator'
 
-const bcrypt = require('bcrypt')
-
 // Passport & Strategy
 const GoogleStrategy = require('passport-google-oauth2').Strategy
 
