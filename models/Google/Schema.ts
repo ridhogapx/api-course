@@ -10,6 +10,11 @@ export const GoogleSchema = Orm.define('sus_google', {
 	name: {
 		type: DataTypes.STRING(100),
 		allowNull: false
+	},
+	role: {
+		type: DataTypes.INTEGER(2),
+		allowNull: false,
+		defaultValue: 0
 	}
 })
 

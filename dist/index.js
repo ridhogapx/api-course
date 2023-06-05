@@ -9,12 +9,14 @@ const express_1 = __importDefault(require("express"));
 const ValidateLogin_1 = __importDefault(require("./middlewares/ValidateInput/ValidateLogin"));
 const ValidateRegister_1 = __importDefault(require("./middlewares/ValidateInput/ValidateRegister"));
 const ValidateCourse_1 = __importDefault(require("./middlewares/ValidateInput/ValidateCourse"));
+// Google Auth Model
+const Schema_1 = require("./models/Google/Schema");
 // User Model
-const Schema_1 = require("./models/User/Schema");
+const Schema_2 = require("./models/User/Schema");
 const Login_1 = __importDefault(require("./models/User/Login"));
 const Register_1 = __importDefault(require("./models/User/Register"));
 // Course Model
-const Schema_2 = require("./models/Course/Schema");
+const Schema_3 = require("./models/Course/Schema");
 const SetupCourse_1 = __importDefault(require("./models/Course/SetupCourse"));
 const AddCourse_1 = __importDefault(require("./models/Course/AddCourse"));
 const AllCourse_1 = __importDefault(require("./models/Course/AllCourse"));
@@ -25,13 +27,16 @@ const DeleteCourse_1 = __importDefault(require("./models/Course/DeleteCourse"));
 const Auth_1 = __importDefault(require("./routes/Auth"));
 // Auth Google
 const Google_1 = __importDefault(require("./routes/Google"));
-const GoogleCallback_1 = __importDefault(require("./routes/GoogleCallback"));
+const GoogleProtected_1 = __importDefault(require("./routes/GoogleProtected"));
 // Session
 const expressSession = require("express-session");
 // Cors for using resource in cross domain
 const cors = require('cors');
 // Passport for Google auth
 const passport = require('passport');
+// Dotenv for accessing sensitive data
+const dotenv = require('dotenv');
+dotenv.config();
 // Module for parsing payload
 const bodyParser = require('body-parser');
 // Validation result
@@ -43,13 +48,16 @@ const app = (0, express_1.default)();
 // Port number
 const port = 3001;
 // Defining Model Database
-(0, Schema_1.checkUserModel)();
-(0, Schema_1.syncUserModel)();
-(0, Schema_2.checkCourseModel)();
-(0, Schema_2.syncCourseModel)();
+(0, Schema_2.checkUserModel)();
+(0, Schema_2.syncUserModel)();
+(0, Schema_1.checkGoogleModel)();
+(0, Schema_1.syncGoogleModel)();
+(0, Schema_3.checkCourseModel)();
+(0, Schema_3.syncCourseModel)();
 // Using payload parser in Express
 app.use(urlEncodedParser);
-app.use(expressSession({ resave: false, saveUninitialized: true, secret: 'testing' }));
+// Session management
+app.use(expressSession({ resave: false, saveUninitialized: true, secret: process.env.SECRET }));
 // Using Cors middleware
 app.use(cors());
 // Route for User
@@ -59,8 +67,8 @@ app.get('/api/auth/:token', Auth_1.default);
 // Initialize Google API Config
 (0, Google_1.default)(passport);
 // Route for Google Auth
-app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { session: false }), GoogleCallback_1.default);
+app.get('/auth/google/callback', passport.authenticate('google', { scope: ['email', 'profile'], successRedirect: '/auth/protected' }));
+app.get('/auth/protected', GoogleProtected_1.default);
 // Route For starter data 
 app.get('/api/course/setup', SetupCourse_1.default);
 // Route for Course
