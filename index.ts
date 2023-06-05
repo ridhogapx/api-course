@@ -39,6 +39,10 @@ const cors = require('cors')
 // Passport for Google auth
 const passport = require('passport') 
 
+// Dotenv for accessing sensitive data
+const dotenv = require('dotenv')
+dotenv.config()
+
 // Module for parsing payload
 const bodyParser = require('body-parser')
 
@@ -65,7 +69,8 @@ syncCourseModel()
 // Using payload parser in Express
 app.use(urlEncodedParser)
 
-app.use(expressSession({ resave: false, saveUninitialized: true, secret: 'testing'}))
+// Session management
+app.use(expressSession({ resave: false, saveUninitialized: true, secret: process.env.SECRET}))
 
 // Using Cors middleware
 app.use(cors())

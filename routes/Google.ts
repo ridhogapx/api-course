@@ -15,21 +15,7 @@ const Google = (passport: any): void => {
         clientSecret: process.env.clientSecret,
         callbackURL: 'http://sus.penguincadel.my.id/auth/google/callback',
         passReqToCallback: true
-    }, async(request: any, accessToken: any, refreshToken: any, profile: any, done: any): Promise<any> => {
-        const checkUser = await GoogleSchema.findAll({
-            where: {
-                email: profile.emails[0].value
-            }
-        })
-
-        if(checkUser.length) {
-            return done(null, true)
-        } else {
-            await GoogleSchema.create({
-                email: profile.emails[0].value,
-                name: profile.displayName
-            })
-        }
+    }, (request: any, accessToken: any, refreshToken: any, profile: any, done: any): any  => {
         return done(null, true);
     }, passport.serializeUser((user: any, done: any): void => {
         done(null, user)
